@@ -18,8 +18,7 @@ app.use(express.static(__dirname));
 
 // get
 app.get("/", function (req, res) {
-  // res.render(index.html);
-  res.send("Found");
+  res.render(index.html);
 })
 
 // post to upload
@@ -33,7 +32,7 @@ app.post("/upload-avatar", async (req, res) => {
 
     } else {
       // use the name of the input field (i.e."avatar") to retrieve the uploaded file)
-      let avatar = req.files.avatar;
+      let avatar = req.files.sampleFile;
 
       // use the mv() method to place the file in upload directory (i.e. "uploads")
       avatar.mv("./uploads/" + avatar.name);

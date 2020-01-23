@@ -4,12 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Document Creator</title>
 </head>
 <body>
   <form ref="uploadForm" id="uploadForm" action="http://localhost:3000/upload-avatar" method="POST" enctype="multipart/form-data">
     <input type="file" name="sampleFile">
     <input type="submit" value="Upload!">
   </form>
+  <!-- <form action="http://localhost:3000/excel" method="POST"> -->
+    <textarea id="excel_data" name="excel_data" style="width:250px;height:150px;"></textarea>
+    <button type="submit" onclick="javascript:generateTable()">Submit</button>
+  <!-- </form> -->
+  <div>
+    <table id="excel_table"></table>
+  </div>
+
+  <script src="./creator.js"></script>
 </body>
 </html>

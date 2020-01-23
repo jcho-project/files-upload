@@ -17,9 +17,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
 // get
-app.get("/", function (req, res) {
+app.get("/", (req, res) => {
   res.render(index.html);
 })
+
+// post excel
+// app.post("/excel", (req, res) => {
+//   let rawData = req.body.excel_data;
+
+//   console.log(rawData);
+
+//   res.send("Excel Uploaded");
+// })
 
 // post to upload
 app.post("/upload-avatar", async (req, res) => {

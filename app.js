@@ -1,9 +1,24 @@
 const express = require("express"),
   fileUpload = require("express-fileupload"),
   cors = require("cors"),
-  bodyParser = require("body-parser");
+  bodyParser = require("body-parser"),
+  mongoose = require("mongoose");
 
 const app = express();
+
+mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifiedTopology: true })
+
+// Schema
+let deliverySchema = new mongoose.Schema({
+  truck: String,
+  model: String,
+  units: Number,
+  quantity: Number,
+  product_grade: String,
+  cbm: Number
+});
+
+let deliveryData = mongoose.model("HE_DD", deliverySchema);
 
 // enable files upload
 app.use(fileUpload({
@@ -21,16 +36,34 @@ app.get("/", (req, res) => {
   res.render(index.html);
 })
 
+// ==============================================================
 // post excel
-// app.post("/excel", (req, res) => {
-//   let rawData = req.body.excel_data;
+// ==============================================================
 
-//   console.log(rawData);
+app.post("/excel", (req, res) => {
+  let rawData = req.body.excel_data;
+  let rows = rawData.split("\n");
+  let refinedData = {};
 
-//   res.send("Excel Uploaded");
-// })
+  // Delete trailing row
+  rows.pop();
 
-// post to upload
+  // Remove all spaces
+  for (let i = 0; i < rows.length; i++) {
+    rows[i] = rows[i].split(/\s+/)
+  }
+
+  for (let i = 0; i < rows[0].length; i++) {
+    refinedData[rows[0][i]] = [rows[i][i]]
+  }
+
+  console.log(refinedData);
+})
+
+// ==============================================================
+// post upload
+// ==============================================================
+
 app.post("/upload-avatar", async (req, res) => {
   try {
     if (!req.files) {

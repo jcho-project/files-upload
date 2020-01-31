@@ -53,11 +53,17 @@ app.post("/excel", (req, res) => {
     rows[i] = rows[i].split(/\s+/)
   }
 
-  for (let i = 0; i < rows[0].length; i++) {
-    refinedData[rows[0][i]] = [rows[i][i]]
+  for (let i = 0; i < rows[0].length - 1; i++) {
+    refinedData[rows[0][i]] = [rows[1][i]]
+
+    for (let j = 2; j < rows.length - 1; j++) {
+      refinedData[rows[0][i]].push(rows[j][i])
+    }
   }
 
   console.log(refinedData);
+
+  res.redirect("/");
 })
 
 // ==============================================================

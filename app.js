@@ -10,28 +10,28 @@ mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifie
 
 // Schema
 let deliverySchema = new mongoose.Schema({
-  truck: String,
-  model: String,
-  units: Number,
-  quantity: Number,
-  product_grade: String,
-  cbm: Number
+  truck: Array,
+  model: Array,
+  units: Array,
+  quantity: Array,
+  product_grade: Array,
+  cbm: Array
 });
 
 let deliveryData = mongoose.model("HE_DD", deliverySchema);
 
-// enable files upload
+// Enable files upload
 app.use(fileUpload({
   createParentPath: true
 }))
 
-// add other middleware
+// Add other middleware
 app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 
-// get
+// Get
 app.get("/", (req, res) => {
   res.render(index.html);
 })
@@ -43,7 +43,7 @@ app.get("/", (req, res) => {
 app.post("/excel", (req, res) => {
   let rawData = req.body.excel_data;
   let rows = rawData.split("\n");
-  let refinedData = {};
+  let refinedData = [];
 
   // Delete trailing row
   rows.pop();
@@ -53,17 +53,36 @@ app.post("/excel", (req, res) => {
     rows[i] = rows[i].split(/\s+/)
   }
 
-  for (let i = 0; i < rows[0].length - 1; i++) {
-    refinedData[rows[0][i]] = [rows[1][i]]
-
-    for (let j = 2; j < rows.length - 1; j++) {
-      refinedData[rows[0][i]].push(rows[j][i])
-    }
-  }
+  
 
   console.log(refinedData);
 
   res.redirect("/");
+
+  // for (let i = 0; i < rows[0].length - 1; i++) {
+  //   refinedData[rows[0][i]] = [rows[1][i]]
+
+  //   for (let j = 2; j < rows.length; j++) {
+  //     refinedData[rows[0][i]].push(rows[j][i])
+  //   }
+  // }
+
+  // let newDD = {
+  //   truck: refinedData.Truck,
+  //   model: refinedData.Model,
+  //   units: refinedData.Units,
+  //   quantity: refinedData["Qty."],
+  //   product_grade: refinedData.Prod_Gr,
+  //   cbm: refinedData["CBM"]
+  // }
+
+  // deliveryData.create(newDD, (err, newlyCreated) => {
+  //   if (err) {
+  //     console.log(err);
+  //   } else {
+  //     res.redirect("/");
+  //   }
+  // })
 })
 
 // ==============================================================

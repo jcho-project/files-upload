@@ -53,7 +53,16 @@ app.post("/excel", (req, res) => {
     rows[i] = rows[i].split(/\s+/)
   }
 
-  
+  // MongoDB suited data parsing
+  for (let j = 1; j < rows.length; j++) {
+    let temp = {};
+
+    for (let i = 0; i < rows[0].length - 1; i++) {
+      temp[rows[0][i]] = rows[j][i]
+    }
+
+    refinedData.push(temp);
+  }
 
   console.log(refinedData);
 

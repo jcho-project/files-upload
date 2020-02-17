@@ -10,12 +10,12 @@ mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifie
 
 // Schema
 let deliverySchema = new mongoose.Schema({
-  truck: Array,
-  model: Array,
-  units: Array,
-  quantity: Array,
-  product_grade: Array,
-  cbm: Array
+  truck: String,
+  model: String,
+  units: String,
+  quantity: String,
+  product_grade: String,
+  cbm: String
 });
 
 let deliveryData = mongoose.model("HE_DD", deliverySchema);
@@ -44,6 +44,7 @@ app.post("/excel", (req, res) => {
   let rawData = req.body.excel_data;
   let rows = rawData.split("\n");
   let refinedData = [];
+  let newDD = [];
 
   // Delete trailing row
   rows.pop();
@@ -64,34 +65,25 @@ app.post("/excel", (req, res) => {
     refinedData.push(temp);
   }
 
-  console.log(refinedData);
+  // Create array containing all refinedData rows
+  for (let i = 0; i < rows.length - 1; i++) {
+    newDD.push({
+      truck: refinedData[i].Truck,
+      model: refinedData[i].Model,
+      units: refinedData[i].Units,
+      quantity: refinedData[i]["Qty."],
+      product_grade: refinedData[i].Prod_Gr,
+      cbm: refinedData[i]["CBM"]
+    })
+  }
 
-  res.redirect("/");
-
-  // for (let i = 0; i < rows[0].length - 1; i++) {
-  //   refinedData[rows[0][i]] = [rows[1][i]]
-
-  //   for (let j = 2; j < rows.length; j++) {
-  //     refinedData[rows[0][i]].push(rows[j][i])
-  //   }
-  // }
-
-  // let newDD = {
-  //   truck: refinedData.Truck,
-  //   model: refinedData.Model,
-  //   units: refinedData.Units,
-  //   quantity: refinedData["Qty."],
-  //   product_grade: refinedData.Prod_Gr,
-  //   cbm: refinedData["CBM"]
-  // }
-
-  // deliveryData.create(newDD, (err, newlyCreated) => {
-  //   if (err) {
-  //     console.log(err);
-  //   } else {
-  //     res.redirect("/");
-  //   }
-  // })
+  deliveryData.create(newDD, (err, newlyCreated) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/");
+    }
+  })
 })
 
 // ==============================================================

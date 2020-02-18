@@ -1,0 +1,18 @@
+<%- include("./partials/header") %>
+
+<form ref="uploadForm" id="uploadForm" action="http://localhost:3000/upload-avatar" method="POST"
+  enctype="multipart/form-data">
+  <input type="file" name="sampleFile">
+  <input type="submit" value="Upload!">
+</form>
+
+<form action="http://localhost:3000/excel" method="POST">
+  <textarea id="excel_data" name="excel_data" style="width:250px;height:150px;"></textarea>
+  <button type="submit">Submit</button>
+</form>
+
+<a href="/show" class="btn btn-sm btn-success">Show HE DD's</a>
+
+<script src="./creator.js"></script>
+
+<%- include("./partials/footer") %>

@@ -1,0 +1,38 @@
+<%- include("./partials/header") %>
+
+<br>
+
+<table id="excel_table" class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Truck</th>
+      <th scope="col">Model</th>
+      <th scope="col">Units</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Product Grade</th>
+      <th scope="col">CBM</th>
+      <th scope="col">Mark All <input type="checkbox" name="checkbox"></th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% data.forEach((detail) => { %>
+    <tr>
+      <td><%= detail.truck %></td>
+      <td><%= detail.model %></td>
+      <td><%= detail.units %></td>
+      <td><%= detail.quantity %></td>
+      <td><%= detail.product_grade %></td>
+      <td><%= detail.cbm %></td>
+      <td><input type="checkbox" name="checkbox"></td>
+      <td>
+        <form action="/show/<%= detail._id %>?_method=DELETE" method="POST">
+          <button class="btn btn-danger">X</button>
+        </form>
+      </td>
+    </tr>
+    <% }) %>
+  </tbody>
+</table>
+
+<%- include("./partials/footer") %>

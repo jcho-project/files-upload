@@ -2,9 +2,25 @@ const express = require("express"),
   fileUpload = require("express-fileupload"),
   cors = require("cors"),
   bodyParser = require("body-parser"),
-  mongoose = require("mongoose");
+  mongoose = require("mongoose"),
+  methodOverride = require("method-override");
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
+
+// Enable files upload
+app.use(fileUpload({
+  createParentPath: true
+}))
+
+// Add other middleware
+app.use(cors());
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(__dirname));
 
 mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifiedTopology: true })
 
@@ -20,24 +36,35 @@ let deliverySchema = new mongoose.Schema({
 
 let deliveryData = mongoose.model("HE_DD", deliverySchema);
 
-// Enable files upload
-app.use(fileUpload({
-  createParentPath: true
-}))
-
-// Add other middleware
-app.use(cors());
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(__dirname));
-
-// Get
+// Index
 app.get("/", (req, res) => {
-  res.render(index.html);
+  res.render("index");
+})
+
+// Display DD List
+app.get("/show", (req, res) => {
+  deliveryData.find({}, (err, allDeliveryData) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("show", { data: allDeliveryData })
+    }
+  }).sort({ truck: 1, quantity: -1 })
+})
+
+// Delete Line
+app.delete("/show/:id", (req, res) => {
+  deliveryData.findByIdAndDelete(req.params.id, (err) => {
+    if (err) {
+      res.redirect("/show");
+    } else {
+      res.redirect("/show");
+    }
+  })
 })
 
 // ==============================================================
-// post excel
+// Post excel
 // ==============================================================
 
 app.post("/excel", (req, res) => {
@@ -77,6 +104,7 @@ app.post("/excel", (req, res) => {
     })
   }
 
+  // Insert into database
   deliveryData.create(newDD, (err, newlyCreated) => {
     if (err) {
       console.log(err);
@@ -87,7 +115,7 @@ app.post("/excel", (req, res) => {
 })
 
 // ==============================================================
-// post upload
+// Post upload
 // ==============================================================
 
 app.post("/upload-avatar", async (req, res) => {

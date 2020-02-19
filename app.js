@@ -7,10 +7,6 @@ const express = require("express"),
 
 const app = express();
 
-app.set("view engine", "ejs");
-app.use(express.static(__dirname + "/public"));
-app.use(methodOverride("_method"));
-
 // Enable files upload
 app.use(fileUpload({
   createParentPath: true
@@ -21,11 +17,17 @@ app.use(cors());
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
+app.use(methodOverride("_method"));
 
 mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifiedTopology: true })
 
-// Schema
-let deliverySchema = new mongoose.Schema({
+// =========================================================================
+// deliveryData Model & Schema
+// =========================================================================
+
+let deliveryDataSchema = new mongoose.Schema({
   truck: String,
   model: String,
   units: String,
@@ -34,15 +36,18 @@ let deliverySchema = new mongoose.Schema({
   cbm: String
 });
 
-let deliveryData = mongoose.model("HE_DD", deliverySchema);
+let deliveryData = mongoose.model("HE_DD", deliveryDataSchema);
 
-// Index
+// =========================================================================
+// INDEX route - show all DD's
+// =========================================================================
+
 app.get("/", (req, res) => {
   res.render("index");
 })
 
 // Display DD List
-app.get("/show", (req, res) => {
+app.get("/he-dd", (req, res) => {
   deliveryData.find({}, (err, allDeliveryData) => {
     if (err) {
       console.log(err);
@@ -52,20 +57,9 @@ app.get("/show", (req, res) => {
   }).sort({ truck: 1, quantity: -1 })
 })
 
-// Delete Line
-app.delete("/show/:id", (req, res) => {
-  deliveryData.findByIdAndDelete(req.params.id, (err) => {
-    if (err) {
-      res.redirect("/show");
-    } else {
-      res.redirect("/show");
-    }
-  })
-})
-
-// ==============================================================
-// Post excel
-// ==============================================================
+// =========================================================================
+// CREATE route - create a database suited data from input and save to DB
+// =========================================================================
 
 app.post("/excel", (req, res) => {
   let rawData = req.body.excel_data;
@@ -114,9 +108,23 @@ app.post("/excel", (req, res) => {
   })
 })
 
-// ==============================================================
-// Post upload
-// ==============================================================
+// =========================================================================
+// DESTROY route - delete selected line from DD list
+// ========================================================================
+
+app.delete("/he-dd/:id", (req, res) => {
+  deliveryData.findByIdAndDelete(req.params.id, (err) => {
+    if (err) {
+      res.redirect("/he-dd");
+    } else {
+      res.redirect("/he-dd");
+    }
+  });
+});
+
+// =========================================================================
+// UPLOAD route - upload document template for further processing
+// =========================================================================
 
 app.post("/upload-avatar", async (req, res) => {
   try {

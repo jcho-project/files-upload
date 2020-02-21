@@ -2,3 +2,10 @@
   width: 80%;
   margin: auto;
 }
+
+.mark {
+  margin: 0;
+  padding: 0;
+  width: 13px;
+  height: 13px;
+}

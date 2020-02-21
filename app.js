@@ -33,7 +33,8 @@ let deliveryDataSchema = new mongoose.Schema({
   units: String,
   quantity: String,
   product_grade: String,
-  cbm: String
+  cbm: String,
+  marked: Boolean
 });
 
 let deliveryData = mongoose.model("HE_DD", deliveryDataSchema);
@@ -94,7 +95,8 @@ app.post("/excel", (req, res) => {
       units: refinedData[i].Units,
       quantity: refinedData[i]["Qty."],
       product_grade: refinedData[i].Prod_Gr,
-      cbm: refinedData[i]["CBM"]
+      cbm: refinedData[i]["CBM"],
+      marked: false
     })
   }
 
@@ -109,17 +111,33 @@ app.post("/excel", (req, res) => {
 })
 
 // =========================================================================
+// UPDATE route - update marked status of checked line
+// =========================================================================
+
+app.put("/he-dd/:id", (req, res) => {
+  deliveryData.findById(req.params.id, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      found.marked = !found.marked;
+      found.save()
+      res.redirect("/he-dd")
+    }
+  })
+})
+
+// =========================================================================
 // DESTROY route - delete selected line from DD list
 // ========================================================================
 
 app.delete("/he-dd/:id", (req, res) => {
-  deliveryData.findByIdAndDelete(req.params.id, (err) => {
+  deliveryData.deleteMany({ marked: true }, (err) => {
     if (err) {
-      res.redirect("/he-dd");
+      console.log(err);
     } else {
       res.redirect("/he-dd");
     }
-  });
+  })
 });
 
 // =========================================================================

@@ -25,7 +25,11 @@
         <td><%= detail.quantity %></td>
         <td><%= detail.product_grade %></td>
         <td><%= detail.cbm %></td>
-        <td><input type="checkbox" name="checkbox"></td>
+        <td>
+          <form class="mark" action="/he-dd/<%= detail._id %>?_method=PUT" method="POST">
+            <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
+          </form>
+        </td>
         <td>
           <form action="/he-dd/<%= detail._id %>?_method=DELETE" method="POST">
             <button class="btn btn-danger">X</button>
@@ -38,5 +42,18 @@
 
   <br>
 </div>
+
+<script type="text/javascript">
+  let markForm = document.getElementsByClassName("mark");
+  let checkbox = document.getElementsByClassName("checkbox")
+
+  for (let i = 0; i < markForm.length; i++) {
+    markForm[i].addEventListener("change", function () {
+      // if (checkbox[i].checked) {
+      markForm[i].submit();
+      // }
+    })
+  }
+</script>
 
 <%- include("./partials/footer") %>

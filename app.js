@@ -140,6 +140,16 @@ app.delete("/he-dd/:id", (req, res) => {
   })
 });
 
+app.delete("/he-dd", (req, res) => {
+  deliveryData.deleteMany({}, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/he-dd");
+    }
+  })
+})
+
 // =========================================================================
 // UPLOAD route - upload document template for further processing
 // =========================================================================

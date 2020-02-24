@@ -12,8 +12,12 @@
         <th scope="col">Quantity</th>
         <th scope="col">Product Grade</th>
         <th scope="col">CBM</th>
-        <th scope="col">Mark All <input type="checkbox" name="checkbox"></th>
-        <th scope="col">Delete</th>
+        <th scope="col">Select</th>
+        <th scope="col">
+          <form action="/he-dd?_method=DELETE"method="POST">
+            <button class="btn btn-danger">Delete All</button>
+          </form>
+        </th>
       </tr>
     </thead>
     <tbody>

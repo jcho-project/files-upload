@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb://localhost/he_dd", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, useUnifiedTopology: true })
 
 // =========================================================================
 // deliveryData Model & Schema
@@ -37,7 +37,7 @@ let deliveryDataSchema = new mongoose.Schema({
   marked: Boolean
 });
 
-let deliveryData = mongoose.model("HE_DD", deliveryDataSchema);
+let deliveryData = mongoose.model("he-dd", deliveryDataSchema);
 
 // =========================================================================
 // INDEX route - show all DD's

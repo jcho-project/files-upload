@@ -2,8 +2,36 @@
 
 <br>
 
-<div class="container">
-  <table id="excel_table" class="table table-hover table-striped table-bordered">
+<button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
+  Add DD's
+</button>
+
+<div class="modal fade" id="he-modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload HE DD</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="/excel" method="POST">
+        <div class="modal-body">
+          <textarea id="excel_data" name="excel_data" style="width:250px;height:150px;"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table id="excel_table" class="table table-hover table-striped table-bordered table-sm">
     <thead class="thead-dark">
       <tr>
         <th scope="col">Truck</th>
@@ -39,7 +67,7 @@
         <td>
           <form action="/he-dd/<%= detail._id %>?_method=DELETE" method="POST">
             <div class="text-center">
-              <button class="btn btn-secondary btn-sm">X</button>
+              <button class="btn btn-danger btn-sm">X</button>
             </div>
           </form>
         </td>
@@ -57,9 +85,7 @@
 
   for (let i = 0; i < markForm.length; i++) {
     markForm[i].addEventListener("change", function () {
-      // if (checkbox[i].checked) {
       markForm[i].submit();
-      // }
     })
   }
 </script>

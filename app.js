@@ -27,6 +27,16 @@ mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, us
 // deliveryData Model & Schema
 // =========================================================================
 
+let deliveryDataSchemaHA = new mongoose.Schema({
+  truck: String,
+  model: String,
+  units: String,
+  quantity: String,
+  product_grade: String,
+  cbm: String,
+  marked: Boolean
+});
+
 let deliveryDataSchema = new mongoose.Schema({
   truck: String,
   model: String,
@@ -38,6 +48,7 @@ let deliveryDataSchema = new mongoose.Schema({
 });
 
 let deliveryData = mongoose.model("he-dd", deliveryDataSchema);
+let deliveryDataHA = mongoose.model("ha-dd", deliveryDataSchemaHA);
 
 // =========================================================================
 // INDEX route - show all DD's
@@ -47,13 +58,24 @@ app.get("/", (req, res) => {
   res.render("index");
 })
 
-// Display DD List
+// Display HE DD List
 app.get("/he-dd", (req, res) => {
   deliveryData.find({}, (err, allDeliveryData) => {
     if (err) {
       console.log(err);
     } else {
-      res.render("show", { data: allDeliveryData })
+      res.render("he-show", { data: allDeliveryData })
+    }
+  }).sort({ truck: 1, quantity: -1 })
+})
+
+// Display HA DD List
+app.get("/ha-dd", (req, res) => {
+  deliveryDataHA.find({}, (err, allDeliveryData) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("ha-show", { data: allDeliveryData })
     }
   }).sort({ truck: 1, quantity: -1 })
 })
@@ -62,7 +84,8 @@ app.get("/he-dd", (req, res) => {
 // CREATE route - create a database suited data from input and save to DB
 // =========================================================================
 
-app.post("/excel", (req, res) => {
+// Create route for HE
+app.post("/he-upload", (req, res) => {
   let rawData = req.body.excel_data;
   let rows = rawData.split("\n");
   let refinedData = [];
@@ -105,7 +128,56 @@ app.post("/excel", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect("/");
+      res.redirect("/he-show");
+    }
+  })
+})
+
+// Create route for HA
+app.post("/ha-upload", (req, res) => {
+  let rawData = req.body.excel_data;
+  let rows = rawData.split("\n");
+  let refinedData = [];
+  let newDD = [];
+
+  // Delete trailing row
+  rows.pop();
+
+  // Remove all spaces
+  for (let i = 0; i < rows.length; i++) {
+    rows[i] = rows[i].split(/\s+/)
+  }
+
+  // MongoDB suited data parsing
+  for (let j = 1; j < rows.length; j++) {
+    let temp = {};
+
+    for (let i = 0; i < rows[0].length - 1; i++) {
+      temp[rows[0][i]] = rows[j][i]
+    }
+
+    refinedData.push(temp);
+  }
+
+  // Create array containing all refinedData rows
+  for (let i = 0; i < rows.length - 1; i++) {
+    newDD.push({
+      truck: refinedData[i].Truck,
+      model: refinedData[i].Model,
+      units: refinedData[i].Units,
+      quantity: refinedData[i]["Qty."],
+      product_grade: refinedData[i].Prod_Gr,
+      cbm: refinedData[i]["CBM"],
+      marked: false
+    })
+  }
+
+  // Insert into database
+  deliveryDataHA.create(newDD, (err, newlyCreated) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/ha-show");
     }
   })
 })
@@ -114,6 +186,7 @@ app.post("/excel", (req, res) => {
 // UPDATE route - update marked status of checked line
 // =========================================================================
 
+// Update route for HE
 app.put("/he-dd/:id", (req, res) => {
   deliveryData.findById(req.params.id, (err, found) => {
     if (err) {
@@ -126,10 +199,24 @@ app.put("/he-dd/:id", (req, res) => {
   })
 })
 
+// Update route for HA
+app.put("/ha-dd/:id", (req, res) => {
+  deliveryDataHA.findById(req.params.id, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      found.marked = !found.marked;
+      found.save()
+      res.redirect("/ha-dd")
+    }
+  })
+})
+
 // =========================================================================
 // DESTROY route - delete selected line from DD list
 // ========================================================================
 
+// Destroy routes for HE
 app.delete("/he-dd/:id", (req, res) => {
   deliveryData.deleteMany({ marked: true }, (err) => {
     if (err) {
@@ -146,6 +233,27 @@ app.delete("/he-dd", (req, res) => {
       console.log(err);
     } else {
       res.redirect("/he-dd");
+    }
+  })
+})
+
+// Destroy routes for HA
+app.delete("/ha-dd/:id", (req, res) => {
+  deliveryDataHA.deleteMany({ marked: true }, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/ha-dd");
+    }
+  })
+});
+
+app.delete("/ha-dd", (req, res) => {
+  deliveryDataHA.deleteMany({}, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/ha-dd");
     }
   })
 })

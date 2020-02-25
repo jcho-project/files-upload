@@ -3,7 +3,7 @@
 <br>
 
 <button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
-  Add DD's
+  Add HA DD's
 </button>
 
 <div class="modal fade" id="he-modal">
@@ -16,7 +16,7 @@
         </button>
       </div>
 
-      <form action="/excel" method="POST">
+      <form action="/ha-upload" method="POST">
         <div class="modal-body">
           <textarea id="excel_data" name="excel_data" style="width:250px;height:150px;"></textarea>
         </div>
@@ -42,7 +42,7 @@
         <th scope="col">CBM</th>
         <th scope="col">Select</th>
         <th scope="col">
-          <form action="/he-dd?_method=DELETE" method="POST">
+          <form action="/ha-dd?_method=DELETE" method="POST">
             <div class="text-center">
               <button class="btn btn-danger btn-sm">Delete All</button>
             </div>
@@ -60,12 +60,12 @@
         <td><%= detail.product_grade %></td>
         <td><%= detail.cbm %></td>
         <td>
-          <form class="mark" action="/he-dd/<%= detail._id %>?_method=PUT" method="POST">
+          <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
             <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
           </form>
         </td>
         <td>
-          <form action="/he-dd/<%= detail._id %>?_method=DELETE" method="POST">
+          <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
             <div class="text-center">
               <button class="btn btn-danger btn-sm">X</button>
             </div>

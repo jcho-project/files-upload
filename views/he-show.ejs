@@ -1,0 +1,93 @@
+<%- include("./partials/header") %>
+
+<br>
+
+<button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
+  Add HE DD's
+</button>
+
+<div class="modal fade" id="he-modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload HE DD</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <form action="/he-upload" method="POST">
+        <div class="modal-body">
+          <textarea id="excel_data" name="excel_data" style="width:250px;height:150px;"></textarea>
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table id="excel_table" class="table table-hover table-striped table-bordered table-sm">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Truck</th>
+        <th scope="col">Model</th>
+        <th scope="col">Units</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Product Grade</th>
+        <th scope="col">CBM</th>
+        <th scope="col">Select</th>
+        <th scope="col">
+          <form action="/he-dd?_method=DELETE" method="POST">
+            <div class="text-center">
+              <button class="btn btn-danger btn-sm">Delete All</button>
+            </div>
+          </form>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach((detail) => { %>
+      <tr>
+        <td><%= detail.truck %></td>
+        <td><%= detail.model %></td>
+        <td><%= detail.units %></td>
+        <td><%= detail.quantity %></td>
+        <td><%= detail.product_grade %></td>
+        <td><%= detail.cbm %></td>
+        <td>
+          <form class="mark" action="/he-dd/<%= detail._id %>?_method=PUT" method="POST">
+            <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
+          </form>
+        </td>
+        <td>
+          <form action="/he-dd/<%= detail._id %>?_method=DELETE" method="POST">
+            <div class="text-center">
+              <button class="btn btn-danger btn-sm">X</button>
+            </div>
+          </form>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<br>
+
+<script type="text/javascript">
+  let markForm = document.getElementsByClassName("mark");
+  let checkbox = document.getElementsByClassName("checkbox")
+
+  for (let i = 0; i < markForm.length; i++) {
+    markForm[i].addEventListener("change", function () {
+      markForm[i].submit();
+    })
+  }
+</script>
+
+<%- include("./partials/footer") %>

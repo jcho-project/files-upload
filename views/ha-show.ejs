@@ -41,6 +41,7 @@
         <th scope="col">Product Grade</th>
         <th scope="col">CBM</th>
         <th scope="col">Select</th>
+        <th scope="col">Detail</th>
         <th scope="col">
           <form action="/ha-dd?_method=DELETE" method="POST">
             <div class="text-center">
@@ -67,7 +68,14 @@
         <td>
           <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
             <div class="text-center">
-              <button class="btn btn-danger btn-sm">X</button>
+              <button class="btn btn-outline-info btn-sm">Info</button>
+            </div>
+          </form>
+        </td>
+        <td>
+          <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
+            <div class="text-center">
+              <button class="btn btn-outline-danger btn-sm">X</button>
             </div>
           </form>
         </td>

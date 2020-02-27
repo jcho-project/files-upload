@@ -28,12 +28,100 @@ mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, us
 // =========================================================================
 
 let deliveryDataSchemaHA = new mongoose.Schema({
-  truck: String,
-  model: String,
-  units: String,
-  quantity: String,
-  product_grade: String,
-  cbm: String,
+  ["Bill To Name"]: String,
+  ["Ship To Name"]: String,
+  ["Model"]: String,
+  ["Order No."]: String,
+  ["Line No."]: String,
+  ["Order Type"]: String,
+  ["Line Status"]: String,
+  ["Hold Flag"]: String,
+  ["Ready To Pick"]: String,
+  ["Pick Released"]: String,
+  ["Instock Flag"]: String,
+  ["Order Qty"]: String,
+  ["Unit Selling Price"]: String,
+  ["Sales Amount"]: String,
+  ["Tax Amount"]: String,
+  ["Charge Amount"]: String,
+  ["Line Total"]: String,
+  ["List Price"]: String,
+  ["Original List Price"]: String,
+  ["DC Rate"]: String,
+  ["Currency"]: String,
+  ["DFI Applicable"]: String,
+  ["AAI Applicable"]: String,
+  ["Cancel Qty"]: String,
+  ["Booked Date"]: String,
+  ["Req. Arrival Date From"]: String,
+  ["Req. Arrival Date To"]: String,
+  ["Req. Ship Date"]: String,
+  ["Line Type"]: String,
+  ["Customer Name"]: String,
+  ["Bill To"]: String,
+  ["Department"]: String,
+  ["Ship To"]: String,
+  ["Ship To Full Name"]: String,
+  ["Store No"]: String,
+  ["Price Condition"]: String,
+  ["Payment Term"]: String,
+  ["Customer PO No."]: String,
+  ["Customer Po Date"]: String,
+  ["Sales Person"]: String,
+  ["Inventory Org."]: String,
+  ["Sub- Inventory"]: String,
+  ["Shipping Method"]: String,
+  ["Order Source"]: String,
+  ["Order Status"]: String,
+  ["Order Category"]: String,
+  ["Receiver City Desc"]: String,
+  ["Receiver Postal code"]: String,
+  ["Receiver State"]: String,
+  ["Item Division"]: String,
+  ["Product Level1 Name"]: String,
+  ["Product Level2 Name"]: String,
+  ["Product Level3 Name"]: String,
+  ["Product Level4 Name"]: String,
+  ["Product Level4 Code"]: String,
+  ["Model Category"]: String,
+  ["Item Type"]: String,
+  ["Item Weight"]: String,
+  ["Item CBM"]: String,
+  ["Sales Channel (High)"]: String,
+  ["Sales Channel (Low)"]: String,
+  ["Back Order Hold"]: String,
+  ["Credit Hold"]: String,
+  ["Overdue Hold"]: String,
+  ["Customer Hold"]: String,
+  ["Payterm Term Hold"]: String,
+  ["FP Hold"]: String,
+  ["Minimum Hold"]: String,
+  ["Future Hold"]: String,
+  ["Reserve Hold"]: String,
+  ["Manual Hold"]: String,
+  ["Auto Pending Hold"]: String,
+  ["S/A Hold"]: String,
+  ["Form Hold"]: String,
+  ["Bank Collateral Hold"]: String,
+  ["Insurance Hold"]: String,
+  ["Inventory Reserved"]: String,
+  ["Pick Release Qty"]: String,
+  ["SO-SA Mapping"]: String,
+  ["Picking Remark"]: String,
+  ["Shipping Remark"]: String,
+  ["Create Employee Name"]: String,
+  ["Create Date"]: String,
+  ["Order Date"]: String,
+  ["Customer RAD"]: String,
+  ["Accounting Unit"]: String,
+  ["Customer Model"]: String,
+  ["CNPJ"]: String,
+  ["SO Status(2)"]: String,
+  ["SBP Tax Include"]: String,
+  ["SBP Tax Exclude"]: String,
+  ["RRP Tax Include"]: String,
+  ["RRP Tax Exclude"]: String,
+  ["SO FAP Flag"]: String,
   marked: Boolean
 });
 
@@ -136,17 +224,23 @@ app.post("/he-upload", (req, res) => {
 // Create route for HA
 app.post("/ha-upload", (req, res) => {
   let rawData = req.body.excel_data;
-  let rows = rawData.split("\n");
+  rawData.split("\n")
+  let rows = rawData.split("\r");
+  rows.pop()
   let refinedData = [];
   let newDD = [];
 
-  // Delete trailing row
-  rows.pop();
-
-  // Remove all spaces
   for (let i = 0; i < rows.length; i++) {
-    rows[i] = rows[i].split(/\s+/)
+    rows[i] = rows[i].split("\t");
   }
+
+  // // Delete trailing row
+  // rows.pop();
+
+  // // Remove all spaces
+  // for (let i = 0; i < rows.length; i++) {
+  //   rows[i] = rows[i].split(/\s+/)
+  // }
 
   // MongoDB suited data parsing
   for (let j = 1; j < rows.length; j++) {
@@ -159,18 +253,117 @@ app.post("/ha-upload", (req, res) => {
     refinedData.push(temp);
   }
 
+  // rawData.split("\n");
+  // refinedData.push(rawData.split("\r"));
+  // rawData.split("\r");
+
+
+
+  // console.log(rows);
+  console.log(refinedData[0]);
+
   // Create array containing all refinedData rows
   for (let i = 0; i < rows.length - 1; i++) {
     newDD.push({
-      truck: refinedData[i].Truck,
-      model: refinedData[i].Model,
-      units: refinedData[i].Units,
-      quantity: refinedData[i]["Qty."],
-      product_grade: refinedData[i].Prod_Gr,
-      cbm: refinedData[i]["CBM"],
-      marked: false
+      ["Bill To Name"]: refinedData[i]["Bill To Name"],
+      ["Ship To Name"]: refinedData[i]["Ship To Name"],
+      "Model": refinedData[i]["Model"],
+      ["Order No."]: refinedData[i]["Order No."],
+      ["Line No."]: refinedData[i]["Line No."],
+      ["Order Type"]: refinedData[i]["Order Type"],
+      ["Line Status"]: refinedData[i]["Line Status"],
+      ["Hold Flag"]: refinedData[i]["Hold Flag"],
+      ["Ready To Pick"]: refinedData[i]["Ready To Pick"],
+      ["Pick Released"]: refinedData[i]["Pick Released"],
+      ["Instock Flag"]: refinedData[i]["Instock Flag"],
+      ["Order Qty"]: refinedData[i]["Order Qty"]
+      // ["Unit Selling Price"]: refinedData[i]["Unit Selling Price"],
+      // ["Sales Amount"]: refinedData[i]["Sales Amount"],
+      // ["Tax Amount"]: refinedData[i]["Tax Amount"],
+      // ["Charge Amount"]: refinedData[i]["Charge Amount"],
+      // ["Line Total"]: refinedData[i]["Line Total"],
+      // ["List Price"]: refinedData[i]["List Price"],
+      // ["Original List Price"]: refinedData[i]["Original List Price"],
+      // ["DC Rate"]: refinedData[i]["DC Rate"],
+      // ["DFI Applicable"]: refinedData[i]["DFI Applicable"],
+      // ["Currency"]: refinedData[i]["Currency"],
+      // ["AAI Applicable"]: refinedData[i]["AAI Applicable"],
+      // ["Cancel Qty"]: refinedData[i]["Cancel Qty"],
+      // ["Booked Date"]: refinedData[i]["Booked Date"],
+      // ["Req. Arrival Date From"]: refinedData[i]["Req. Arrival Date From"],
+      // ["Req. Arrival Date To"]: refinedData[i]["Req. Arrival Date To"],
+      // ["Req. Ship Date"]: refinedData[i]["Req. Ship Date"],
+      // ["Line Type"]: refinedData[i]["Line Type"],
+      // ["Customer Name"]: refinedData[i]["Customer Name"],
+      // ["Bill To"]: refinedData[i]["Bill To"],
+      // ["Department"]: refinedData[i]["Department"],
+      // ["Ship To"]: refinedData[i]["Ship To"],
+      // ["Ship To Full Name"]: refinedData[i]["Ship To Full Name"],
+      // ["Store No"]: refinedData[i]["Store No"],
+      // ["Price Condition"]: refinedData[i]["Price Condition"],
+      // ["Payment Term"]: refinedData[i]["Payment Term"],
+      // ["Customer PO No."]: refinedData[i]["Customer PO No."],
+      // ["Customer Po Date"]: refinedData[i]["Customer Po Date"],
+      // ["Sales Person"]: refinedData[i]["Sales Person"],
+      // ["Inventory Org."]: refinedData[i]["Inventory Org."],
+      // ["Sub- Inventory"]: refinedData[i]["Sub- Inventory"],
+      // ["Shipping Method"]: refinedData[i]["Shipping Method"],
+      // ["Order Source"]: refinedData[i]["Order Source"],
+      // ["Order Status"]: refinedData[i]["Order Status"],
+      // ["Order Category"]: refinedData[i]["Order Category"],
+      // ["Receiver City Desc"]: refinedData[i]["Receiver City Desc"],
+      // ["Receiver Postal code"]: refinedData[i]["Receiver Postal code"],
+      // ["Receiver State"]: refinedData[i]["Receiver State"],
+      // ["Item Division"]: refinedData[i]["Item Division"],
+      // ["Product Level1 Name"]: refinedData[i]["Product Level1 Name"],
+      // ["Product Level2 Name"]: refinedData[i]["Product Level2 Name"],
+      // ["Product Level3 Name"]: refinedData[i]["Product Level3 Name"],
+      // ["Product Level4 Name"]: refinedData[i]["Product Level4 Name"],
+      // ["Product Level4 Code"]: refinedData[i]["Product Level4 Code"],
+      // ["Model Category"]: refinedData[i]["Model Category"],
+      // ["Item Type"]: refinedData[i]["Item Type"],
+      // ["Item Weight"]: refinedData[i]["Item Weight"],
+      // ["Item CBM"]: refinedData[i]["Item CBM"],
+      // ["Sales Channel (High)"]: refinedData[i]["Sales Channel (High)"],
+      // ["Sales Channel (Low)"]: refinedData[i]["Sales Channel (Low)"],
+      // ["Back Order Hold"]: refinedData[i]["Back Order Hold"],
+      // ["Credit Hold"]: refinedData[i]["Credit Hold"],
+      // ["Overdue Hold"]: refinedData[i]["Overdue Hold"],
+      // ["Customer Hold"]: refinedData[i]["Customer Hold"],
+      // ["Payterm Term Hold"]: refinedData[i]["Payterm Term Hold"],
+      // ["FP Hold"]: refinedData[i]["FP Hold"],
+      // ["Minimum Hold"]: refinedData[i]["Minimum Hold"],
+      // ["Future Hold"]: refinedData[i]["Future Hold"],
+      // ["Reserve Hold"]: refinedData[i]["Reserve Hold"],
+      // ["Manual Hold"]: refinedData[i]["Manual Hold"],
+      // ["Auto Pending Hold"]: refinedData[i]["Auto Pending Hold"],
+      // ["S/A Hold"]: refinedData[i]["S/A Hold"],
+      // ["Form Hold"]: refinedData[i]["Form Hold"],
+      // ["Bank Collateral Hold"]: refinedData[i]["Bank Collateral Hold"],
+      // ["Insurance Hold"]: refinedData[i]["Insurance Hold"],
+      // ["Inventory Reserved"]: refinedData[i]["Inventory Reserved"],
+      // ["Pick Release Qty"]: refinedData[i]["Pick Release Qty"],
+      // ["SO-SA Mapping"]: refinedData[i]["SO-SA Mapping"],
+      // ["Picking Remark"]: refinedData[i]["Picking Remark"],
+      // ["Shipping Remark"]: refinedData[i]["Shipping Remark"],
+      // ["Create Employee Name"]: refinedData[i]["Create Employee Name"],
+      // ["Create Date"]: refinedData[i]["Create Date"],
+      // ["Order Date"]: refinedData[i]["Order Date"],
+      // ["Customer RAD"]: refinedData[i]["Customer RAD"],
+      // ["Accounting Unit"]: refinedData[i]["Accounting Unit"],
+      // ["Customer Model"]: refinedData[i]["Customer Model"],
+      // ["CNPJ"]: refinedData[i]["CNPJ"],
+      // ["SO Status(2)"]: refinedData[i]["SO Status(2)"],
+      // ["SBP Tax Include"]: refinedData[i]["SBP Tax Include"],
+      // ["SBP Tax Exclude"]: refinedData[i]["SBP Tax Exclude"],
+      // ["RRP Tax Include"]: refinedData[i]["RRP Tax Include"],
+      // ["RRP Tax Exclude"]: refinedData[i]["RRP Tax Exclude"],
+      // ["SO FAP Flag"]: refinedData[i]["SO FAP Flag"],
+      // marked: false,
     })
   }
+
+  // console.log(newDD)
 
   // Insert into database
   deliveryDataHA.create(newDD, (err, newlyCreated) => {

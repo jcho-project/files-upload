@@ -28,6 +28,7 @@ mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, us
 // =========================================================================
 
 let deliveryDataSchemaHA = new mongoose.Schema({
+  ["Truck"]: String,
   ["Bill To Name"]: String,
   ["Ship To Name"]: String,
   ["Model"]: String,
@@ -225,7 +226,7 @@ app.post("/he-upload", (req, res) => {
 app.post("/ha-upload", (req, res) => {
   let rawData = req.body.excel_data;
   rawData.split("\n")
-  let rows = rawData.split("\r");
+  let rows = rawData.split("\n");
   rows.pop()
   let refinedData = [];
   let newDD = [];
@@ -233,14 +234,6 @@ app.post("/ha-upload", (req, res) => {
   for (let i = 0; i < rows.length; i++) {
     rows[i] = rows[i].split("\t");
   }
-
-  // // Delete trailing row
-  // rows.pop();
-
-  // // Remove all spaces
-  // for (let i = 0; i < rows.length; i++) {
-  //   rows[i] = rows[i].split(/\s+/)
-  // }
 
   // MongoDB suited data parsing
   for (let j = 1; j < rows.length; j++) {
@@ -256,11 +249,12 @@ app.post("/ha-upload", (req, res) => {
   // Create array containing all refinedData rows
   for (let i = 0; i < rows.length - 1; i++) {
     newDD.push({
+      ["Truck"]: "",
       ["Bill To Name"]: refinedData[i]["Bill To Name"],
       ["Ship To Name"]: refinedData[i]["Ship To Name"],
       ["Model"]: refinedData[i]["Model"],
-      ["Order No"]: refinedData[i]["Order No."],
-      ["Line No"]: refinedData[i]["Line No."],
+      ["Order No"]: refinedData[i]["Order No"],
+      ["Line No"]: refinedData[i]["Line No"],
       ["Order Type"]: refinedData[i]["Order Type"],
       ["Line Status"]: refinedData[i]["Line Status"],
       ["Hold Flag"]: refinedData[i]["Hold Flag"],
@@ -281,9 +275,9 @@ app.post("/ha-upload", (req, res) => {
       ["AAI Applicable"]: refinedData[i]["AAI Applicable"],
       ["Cancel Qty"]: refinedData[i]["Cancel Qty"],
       ["Booked Date"]: refinedData[i]["Booked Date"],
-      ["Req Arrival Date From"]: refinedData[i]["Req. Arrival Date From"],
-      ["Req Arrival Date To"]: refinedData[i]["Req. Arrival Date To"],
-      ["Req Ship Date"]: refinedData[i]["Req. Ship Date"],
+      ["Req Arrival Date From"]: refinedData[i]["Req Arrival Date From"],
+      ["Req Arrival Date To"]: refinedData[i]["Req Arrival Date To"],
+      ["Req Ship Date"]: refinedData[i]["Req Ship Date"],
       ["Line Type"]: refinedData[i]["Line Type"],
       ["Customer Name"]: refinedData[i]["Customer Name"],
       ["Bill To"]: refinedData[i]["Bill To"],
@@ -296,7 +290,7 @@ app.post("/ha-upload", (req, res) => {
       ["Customer PO No"]: refinedData[i]["Customer PO No."],
       ["Customer Po Date"]: refinedData[i]["Customer Po Date"],
       ["Sales Person"]: refinedData[i]["Sales Person"],
-      ["Inventory Org"]: refinedData[i]["Inventory Org."],
+      ["Inventory Org"]: refinedData[i]["Inventory Org"],
       ["Sub- Inventory"]: refinedData[i]["Sub- Inventory"],
       ["Shipping Method"]: refinedData[i]["Shipping Method"],
       ["Order Source"]: refinedData[i]["Order Source"],
@@ -390,6 +384,18 @@ app.put("/ha-dd/:id", (req, res) => {
     } else {
       found.marked = !found.marked;
       found.save()
+      res.redirect("/ha-dd")
+    }
+  })
+})
+
+// Update truck route for HA
+app.put("/ha-dd/:id/truck", (req, res) => {
+  deliveryDataHA.findByIdAndUpdate(req.params.id, { Truck: req.body.truck }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(req.body.truck)
       res.redirect("/ha-dd")
     }
   })

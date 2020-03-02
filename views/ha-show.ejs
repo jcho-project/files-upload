@@ -54,12 +54,14 @@
     <tbody>
       <% data.forEach((detail) => { %>
       <tr>
-        <td><%= detail.truck %></td>
+        <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
+          <td class="truck-td" name="truck" contenteditable="true"><%= detail.Truck %></td>
+        </form>
         <td><%= detail.Model %></td>
         <td><%= detail["Order Qty"] %></td>
         <td><%= detail["Order No"] %></td>
         <td><%= detail["Line No"] %></td>
-        <td><%= detail.cbm %></td>
+        <td><%= detail["Item CBM"] %></td>
         <td>
           <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
             <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
@@ -89,11 +91,21 @@
 
 <script type="text/javascript">
   let markForm = document.getElementsByClassName("mark");
-  let checkbox = document.getElementsByClassName("checkbox")
+  let checkbox = document.getElementsByClassName("checkbox");
+
+  let truckForm = document.getElementsByClassName("truck-update");
 
   for (let i = 0; i < markForm.length; i++) {
     markForm[i].addEventListener("change", function () {
       markForm[i].submit();
+    })
+  }
+
+  for (let i = 0; i < truckForm.length; i++) {
+    truckForm[i].addEventListener("keyup", function (e) {
+      if (e.keyCode === 9) {
+        truckForm[i].submit()
+      }
     })
   }
 </script>

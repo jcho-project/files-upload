@@ -21,7 +21,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
 app.use(methodOverride("_method"));
 
-mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
 
 // =========================================================================
 // deliveryData Model & Schema
@@ -123,7 +123,11 @@ let deliveryDataSchemaHA = new mongoose.Schema({
   ["RRP Tax Include"]: String,
   ["RRP Tax Exclude"]: String,
   ["SO FAP Flag"]: String,
-  marked: Boolean
+  marked: Boolean,
+  ["Slot Date"]: Date,
+  ["Slot Time"]: Date,
+  ["Reservation No"]: String,
+  ["Status"]: String
 });
 
 let deliveryDataSchema = new mongoose.Schema({
@@ -344,7 +348,11 @@ app.post("/ha-upload", (req, res) => {
       ["RRP Tax Include"]: refinedData[i]["RRP Tax Include"],
       ["RRP Tax Exclude"]: refinedData[i]["RRP Tax Exclude"],
       ["SO FAP Flag"]: refinedData[i]["SO FAP Flag"],
-      marked: false
+      marked: false,
+      ["Slot Date"]: "",
+      ["Slot Time"]: "",
+      ["Reservation No"]: "",
+      ["Status"]: ""
     })
   }
 
@@ -395,7 +403,6 @@ app.put("/ha-dd/:id/truck", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(req.body.truck)
       res.redirect("/ha-dd")
     }
   })

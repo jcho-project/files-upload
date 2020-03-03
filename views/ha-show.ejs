@@ -2,10 +2,14 @@
 
 <br>
 
+<!-- ============================================================================================= -->
+<!-- Button for Add DD -->
+<!-- ============================================================================================= -->
 <button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
   Add HA DD's
 </button>
 
+<!-- Add DD Modal -->
 <div class="modal fade" id="he-modal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -30,6 +34,9 @@
   </div>
 </div>
 
+<!-- ============================================================================================= -->
+<!-- Display DD Table -->
+<!-- ============================================================================================= -->
 <div class="table-responsive">
   <table id="excel_table" class="table table-hover table-striped table-bordered table-sm">
     <thead class="thead-dark">
@@ -37,9 +44,18 @@
         <th scope="col">Truck</th>
         <th scope="col">Model</th>
         <th scope="col">Units</th>
+        <th scope="col">CBM</th>
+        <th scope="col">City</th>
+        <th scope="col">Customer</th>
+        <th scope="col">W/H</th>
+        <th scope="col">Slot Date</th>
+        <th scope="col">Slot Time</th>
+        <th scope="col">Reservation No</th>
+        <th scope="col">Status</th>
+        <th scope="col">Line Status</th>
         <th scope="col">Order No</th>
         <th scope="col">Line No</th>
-        <th scope="col">CBM</th>
+        <th scope="col">Ship To</th>
         <th scope="col">Select</th>
         <th scope="col">Detail</th>
         <th scope="col">
@@ -55,13 +71,28 @@
       <% data.forEach((detail) => { %>
       <tr>
         <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
-          <td class="truck-td" name="truck" contenteditable="true"><%= detail.Truck %></td>
+          <td>
+            <% if (detail.Truck === "") { %>
+            <input type="text" name="truck">
+            <% } else { %>
+            <%= detail.Truck %>
+            <% } %>
+          </td>
         </form>
         <td><%= detail.Model %></td>
         <td><%= detail["Order Qty"] %></td>
+        <td><%= detail["Item CBM"] %></td>
+        <td><%= detail["Receiver City Desc"] %></td>
+        <td><%= detail["Bill To Name"] %></td>
+        <td><%= detail["Inventory Org"] %></td>
+        <td><%= detail["Slot Date"] %></td>
+        <td><%= detail["Slot Time"] %></td>
+        <td><%= detail["Reservation No"] %></td>
+        <td><%= detail["Status"] %></td>
+        <td><%= detail["Sub- Inventory"] %></td>
         <td><%= detail["Order No"] %></td>
         <td><%= detail["Line No"] %></td>
-        <td><%= detail["Item CBM"] %></td>
+        <td><%= detail["Ship To Name"] %></td>
         <td>
           <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
             <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
@@ -87,8 +118,9 @@
   </table>
 </div>
 
-<br>
-
+<!-- ============================================================================================= -->
+<!-- JS & Event Listeners -->
+<!-- ============================================================================================= -->
 <script type="text/javascript">
   let markForm = document.getElementsByClassName("mark");
   let checkbox = document.getElementsByClassName("checkbox");

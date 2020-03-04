@@ -3,7 +3,7 @@ const express = require("express"),
   deliveryDataHA = require("../models/ha-model");
 
 // =========================================================================
-// Display HA DD List
+// Display HA DD List & Detail Info Page
 // =========================================================================
 
 router.get("/", (req, res) => {
@@ -14,6 +14,16 @@ router.get("/", (req, res) => {
       res.render("ha-show", { data: allDeliveryData });
     }
   }).sort({ truck: 1, quantity: -1 });
+});
+
+router.get("/:id", (req, res) => {
+  deliveryDataHA.findById(req.params.id, (err, foundDeliveryData) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.render("detail-info", { data: foundDeliveryData });
+    }
+  })
 });
 
 // =========================================================================

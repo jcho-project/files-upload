@@ -1,6 +1,11 @@
+body {
+  font-size: 12px;
+}
+
 #excel_table {
   width: 95%;
   margin: auto;
+  font-size: 11px;
 }
 
 .mark {
@@ -8,4 +13,17 @@
   padding: 0;
   width: 13px;
   height: 13px;
+}
+
+container {
+  width: 80%;
+}
+
+.card {
+  width: 90%;
+  margin: 1% 3% 1% 3%;
+}
+
+.card .table {
+  margin-top: 10px;
 }

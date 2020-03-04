@@ -99,7 +99,7 @@
           </form>
         </td>
         <td>
-          <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
+          <form action="/ha-dd/<%= detail._id %>" method="GET">
             <div class="text-center">
               <button class="btn btn-outline-info btn-sm">Info</button>
             </div>
@@ -130,16 +130,23 @@
   for (let i = 0; i < markForm.length; i++) {
     markForm[i].addEventListener("change", function () {
       markForm[i].submit();
-    })
-  }
+    });
+  };
 
   for (let i = 0; i < truckForm.length; i++) {
     truckForm[i].addEventListener("keyup", function (e) {
       if (e.keyCode === 9) {
-        truckForm[i].submit()
+        truckForm[i].submit();
       }
-    })
-  }
+    });
+  };
+
+  $(document).ready(function () {
+    $('#excel_table').DataTable({
+      "serverSide": true,
+      "paging": true
+    });
+  });
 </script>
 
 <%- include("./partials/footer") %>

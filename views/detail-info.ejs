@@ -1,0 +1,217 @@
+<%- include("./partials/header") %>
+
+<!-- ============================================================================================= -->
+<!-- Order Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Order
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Model</th>
+          <th scope="col">Quantity</th>
+          <th scope="col">Order No</th>
+          <th scope="col">Line No</th>
+          <th scope="col">Line Status</th>
+          <th scope="col">Booked Date</th>
+          <th scope="col">Creator</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Model"] %></td>
+          <td><%= data["Order Qty"] %></td>
+          <td><%= data["Order No"] %></td>
+          <td><%= data["Line No"] %></td>
+          <td><%= data["Line Status"] %></td>
+          <td><%= data["Booked Date"] %></td>
+          <td><%= data["Create Employee Name"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================================= -->
+<!-- Finance Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Finance
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Unit Selling</th>
+          <th scope="col">Sales Amount</th>
+          <th scope="col">Charge Amount</th>
+          <th scope="col">Line Total</th>
+          <th scope="col">AU</th>
+          <th scope="col">Hold Flag</th>
+          <th scope="col">Pick Ready</th>
+          <th scope="col">Back</th>
+          <th scope="col">Credit</th>
+          <th scope="col">Overdue</th>
+          <th scope="col">Customer</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Unit Selling Price"] %></td>
+          <td><%= data["Sales Amount"] %></td>
+          <td><%= data["Charge Amount"] %></td>
+          <td><%= data["Line Total"] %></td>
+          <td><%= data["Accounting Unit"] %></td>
+          <td><%= data["Hold Flag"] %></td>
+          <td><%= data["Ready To Pick"] %></td>
+          <td><%= data["Back Order Hold"] %></td>
+          <td><%= data["Credit Hold"] %></td>
+          <td><%= data["Overdue Hold"] %></td>
+          <td><%= data["Customer Hold"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================================= -->
+<!-- Customer Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Customer
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Bill To Code</th>
+          <th scope="col">Ship To Code</th>
+          <th scope="col">Bill To</th>
+          <th scope="col">Ship To</th>
+          <th scope="col">City</th>
+          <th scope="col">Postal Code</th>
+          <th scope="col">Customer RAD</th>
+          <th scope="col">Customer Model</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Bill To"] %></td>
+          <td><%= data["Ship To"] %></td>
+          <td><%= data["Bill To Name"] %></td>
+          <td><%= data["Ship To Name"] %></td>
+          <td><%= data["Receiver City Desc"] %></td>
+          <td><%= data["Receiver Postal code"] %></td>
+          <td><%= data["Customer RAD"] %></td>
+          <td><%= data["Customer Model"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================================= -->
+<!-- Warehouse Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Warehouse
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Inventory Org</th>
+          <th scope="col">Sub-Inventory</th>
+          <th scope="col">Order Source</th>
+          <th scope="col">Shipping Method</th>
+          <th scope="col">Inventory Reserved</th>
+          <th scope="col">Pick Release Qty</th>
+          <th scope="col">SO-SA Mapping</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Inventory Org"] %></td>
+          <td><%= data["Sub- Inventory"] %></td>
+          <td><%= data["Order Source"] %></td>
+          <td><%= data["Shipping Method"] %></td>
+          <td><%= data["Inventory Reserved"] %></td>
+          <td><%= data["Pick Release Qty"] %></td>
+          <td><%= data["SO-SA Mapping"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================================= -->
+<!-- Product Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Product
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Model Category</th>
+          <th scope="col">Item Type</th>
+          <th scope="col">Product Name</th>
+          <th scope="col">Detail</th>
+          <th scope="col">Item Weight</th>
+          <th scope="col">Item CBM</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Model Category"] %></td>
+          <td><%= data["Item Type"] %></td>
+          <td><%= data["Product Level1 Name"] %></td>
+          <td><%= data["Product Level4 Name"] %></td>
+          <td><%= data["Item Weight"] %></td>
+          <td><%= data["Item CBM"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ============================================================================================= -->
+<!-- Shipping Information Card -->
+<!-- ============================================================================================= -->
+<div class="card">
+  <div class="card-header">
+    Shipping
+  </div>
+  <div class="container">
+    <table class="table table-hover table-striped table-bordered table-sm">
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">Truck</th>
+          <th scope="col">Slot Date</th>
+          <th scope="col">Slot Time</th>
+          <th scope="col">Reservation No</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><%= data["Truck"] %></td>
+          <td><%= data["Slot Date"] %></td>
+          <td><%= data["Slot Time"] %></td>
+          <td><%= data["Reservation No"] %></td>
+          <td><%= data["Status"] %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%- include("./partials/footer") %>

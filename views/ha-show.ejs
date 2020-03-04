@@ -44,8 +44,6 @@
         <th scope="col">Truck</th>
         <th scope="col">Model</th>
         <th scope="col">Units</th>
-        <th scope="col">CBM</th>
-        <th scope="col">City</th>
         <th scope="col">Customer</th>
         <th scope="col">W/H</th>
         <th scope="col">Slot Date</th>
@@ -79,10 +77,8 @@
             <% } %>
           </td>
         </form>
-        <td><%= detail.Model %></td>
+        <td><%= detail["Model"] %></td>
         <td><%= detail["Order Qty"] %></td>
-        <td><%= detail["Item CBM"] %></td>
-        <td><%= detail["Receiver City Desc"] %></td>
         <td><%= detail["Bill To Name"] %></td>
         <td><%= detail["Inventory Org"] %></td>
         <td><%= detail["Slot Date"] %></td>
@@ -140,13 +136,6 @@
       }
     });
   };
-
-  $(document).ready(function () {
-    $('#excel_table').DataTable({
-      "serverSide": true,
-      "paging": true
-    });
-  });
 </script>
 
 <%- include("./partials/footer") %>

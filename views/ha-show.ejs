@@ -37,110 +37,92 @@
 <!-- ============================================================================================= -->
 <!-- Display DD Table -->
 <!-- ============================================================================================= -->
-<div class="table-responsive">
-  <table id="excel_table" class="table table-hover table-striped table-bordered table-sm">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Truck</th>
-        <th scope="col">Model</th>
-        <th scope="col">Units</th>
-        <th scope="col">Customer</th>
-        <th scope="col">W/H</th>
-        <th scope="col">Slot Date</th>
-        <th scope="col">Slot Time</th>
-        <th scope="col">Reservation No</th>
-        <th scope="col">Status</th>
-        <th scope="col">Line Status</th>
-        <th scope="col">Order No</th>
-        <th scope="col">Line No</th>
-        <th scope="col">Ship To</th>
-        <th scope="col">Select</th>
-        <th scope="col">Detail</th>
-        <th scope="col">
-          <form action="/ha-dd?_method=DELETE" method="POST">
-            <div class="text-center">
-              <button class="btn btn-danger btn-sm">Delete All</button>
-            </div>
-          </form>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% data.forEach((detail) => { %>
-      <tr>
-        <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
-          <td>
-            <% if (detail.Truck === "") { %>
-            <input type="text" name="truck">
-            <% } else { %>
-            <%= detail.Truck %>
-            <% } %>
-          </td>
-        </form>
-        <td><%= detail["Model"] %></td>
-        <td><%= detail["Order Qty"] %></td>
-        <td><%= detail["Bill To Name"] %></td>
-        <td><%= detail["Inventory Org"] %></td>
-        <td><%= detail["Slot Date"] %></td>
-        <td><%= detail["Slot Time"] %></td>
-        <td><%= detail["Reservation No"] %></td>
-        <td><%= detail["Status"] %></td>
-        <td><%= detail["Sub- Inventory"] %></td>
-        <td><%= detail["Order No"] %></td>
-        <td><%= detail["Line No"] %></td>
-        <td><%= detail["Ship To Name"] %></td>
-        <td>
-          <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
-            <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
-          </form>
-        </td>
-        <td>
-          <form action="/ha-dd/<%= detail._id %>" method="GET">
-            <div class="text-center">
-              <button class="btn btn-outline-info btn-sm">Info</button>
-            </div>
-          </form>
-        </td>
-        <td>
-          <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
-            <div class="text-center">
-              <button class="btn btn-outline-danger btn-sm">X</button>
-            </div>
-          </form>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<div id="display-card" class="card shadow mb-4">
+  <div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <!-- <table id="excel_table" class="table table-hover table-striped table-bordered table-sm"> -->
+      <table class="table table-bordered" id="dataTable">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Truck</th>
+            <th scope="col">Model</th>
+            <th scope="col">Units</th>
+            <th scope="col">Customer</th>
+            <th scope="col">W/H</th>
+            <th scope="col">Slot Date</th>
+            <th scope="col">Slot Time</th>
+            <th scope="col">Reserv. No</th>
+            <th scope="col">Status</th>
+            <th scope="col">Line Status</th>
+            <th scope="col">Order No</th>
+            <th scope="col">Line No</th>
+            <th scope="col">Select</th>
+            <th scope="col">Detail</th>
+            <th scope="col">
+              <form action="/ha-dd?_method=DELETE" method="POST">
+                <div class="text-center">
+                  <button class="btn btn-danger btn-sm">Delete All</button>
+                </div>
+              </form>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach((detail) => { %>
+          <tr>
+            <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
+              <td class="truck-td">
+                <% if (detail.Truck === "") { %>
+                <input type="text" name="truck">
+                <% } else { %>
+                <%= detail.Truck %>
+                <% } %>
+              </td>
+            </form>
+            <td><%= detail["Model"] %></td>
+            <td><%= detail["Order Qty"] %></td>
+            <td><%= detail["Bill To Name"] %></td>
+            <td><%= detail["Inventory Org"] %></td>
+            <td><%= detail["Slot Date"] %></td>
+            <td><%= detail["Slot Time"] %></td>
+            <td><%= detail["Reservation No"] %></td>
+            <td><%= detail["Status"] %></td>
+            <td><%= detail["Sub- Inventory"] %></td>
+            <td><%= detail["Order No"] %></td>
+            <td><%= detail["Line No"] %></td>
+            <td>
+              <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
+                <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
+              </form>
+            </td>
+            <td>
+              <form action="/ha-dd/<%= detail._id %>" method="GET">
+                <div class="text-center">
+                  <button class="btn btn-outline-info btn-sm">Info</button>
+                </div>
+              </form>
+            </td>
+            <td>
+              <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
+                <div class="text-center">
+                  <button class="btn btn-outline-danger btn-sm">X</button>
+                </div>
+              </form>
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
-<!-- ============================================================================================= -->
-<!-- JS & Event Listeners -->
-<!-- ============================================================================================= -->
-<script type="text/javascript">
-  let markForm = document.getElementsByClassName("mark");
-  let checkbox = document.getElementsByClassName("checkbox");
+<!-- ZingGrid -->
+<!-- <zing-grid id="example-grid" caption="HA DD"></zing-grid> -->
 
-  let truckForm = document.getElementsByClassName("truck-update");
-
-  for (let i = 0; i < markForm.length; i++) {
-    markForm[i].addEventListener("change", function () {
-      markForm[i].submit();
-    });
-  };
-
-  for (let i = 0; i < truckForm.length; i++) {
-    truckForm[i].addEventListener("keyup", function (e) {
-      if (e.keyCode === 9) {
-        truckForm[i].submit();
-      }
-    });
-  };
-
-  // Initializing DataTables
-  $(document).ready(function () {
-    $('#excel_table').DataTable();
-  });
-</script>
+<script src="../controller/table.js"></script>
 
 <%- include("./partials/footer") %>

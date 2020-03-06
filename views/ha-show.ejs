@@ -43,28 +43,27 @@
   </div>
   <div class="card-body">
     <div class="table-responsive">
-      <!-- <table id="excel_table" class="table table-hover table-striped table-bordered table-sm"> -->
-      <table class="table table-bordered" id="dataTable">
-        <thead class="thead-dark">
+      <table class="table table-sm table-striped table-bordered" id="dataTable">
+        <thead>
           <tr>
             <th scope="col">Truck</th>
             <th scope="col">Model</th>
             <th scope="col">Units</th>
             <th scope="col">Customer</th>
             <th scope="col">W/H</th>
-            <th scope="col">Slot Date</th>
-            <th scope="col">Slot Time</th>
-            <th scope="col">Reserv. No</th>
+            <th scope="col">Slot_Date</th>
+            <th scope="col">Slot_Time</th>
+            <th scope="col">Reserv._No</th>
             <th scope="col">Status</th>
-            <th scope="col">Line Status</th>
-            <th scope="col">Order No</th>
-            <th scope="col">Line No</th>
+            <th scope="col">Line_Status</th>
+            <th scope="col">Order_No</th>
+            <th scope="col">Line_No</th>
             <th scope="col">Select</th>
             <th scope="col">Detail</th>
             <th scope="col">
               <form action="/ha-dd?_method=DELETE" method="POST">
                 <div class="text-center">
-                  <button class="btn btn-danger btn-sm">Delete All</button>
+                  <button class="p-1 btn btn-danger btn-sm">Delete_All</button>
                 </div>
               </form>
             </th>
@@ -73,20 +72,20 @@
         <tbody>
           <% data.forEach((detail) => { %>
           <tr>
-            <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
-              <td class="truck-td">
+            <td class="truck-td">
+              <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
                 <% if (detail.Truck === "") { %>
                 <input type="text" name="truck">
                 <% } else { %>
                 <%= detail.Truck %>
                 <% } %>
-              </td>
-            </form>
+              </form>
+            </td>
             <td><%= detail["Model"] %></td>
             <td><%= detail["Order Qty"] %></td>
             <td><%= detail["Bill To Name"] %></td>
             <td><%= detail["Inventory Org"] %></td>
-            <td><%= detail["Slot Date"] %></td>
+            <td class="slotDate-td" data-id="<%= detail._id %>"><%= detail["Slot Date"] %></td>
             <td><%= detail["Slot Time"] %></td>
             <td><%= detail["Reservation No"] %></td>
             <td><%= detail["Status"] %></td>
@@ -101,7 +100,7 @@
             <td>
               <form action="/ha-dd/<%= detail._id %>" method="GET">
                 <div class="text-center">
-                  <button class="btn btn-outline-info btn-sm">Info</button>
+                  <button class="p-1 btn btn-outline-info btn-sm">Info</button>
                 </div>
               </form>
             </td>

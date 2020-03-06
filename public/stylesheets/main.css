@@ -20,7 +20,7 @@ container {
 }
 
 #display-card {
-  margin: 0 2% 0 2%;
+  margin: 0 0.5% 0 0.5%;
 }
 
 .detail-card {
@@ -30,4 +30,12 @@ container {
 
 .detail-card table {
   margin-top: 10px;
+}
+
+.btn-outline-info, .btn-outline-danger {
+  font-size: 8px;
+}
+
+.checkbox {
+  margin: auto;
 }

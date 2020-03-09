@@ -205,13 +205,14 @@ router.put("/:id/truck", (req, res) => {
 
 // SlotDate Test
 router.put("/:id/slotDate", (req, res) => {
-  console.log("route hit")
   deliveryDataHA.findByIdAndUpdate(req.params.id, { ["Slot Date"]: req.body["Slot Date"] }, (err, found) => {
     if (err) {
       console.log(err);
     } else {
       console.log(req.body["Slot Date"]);
-      res.redirect("/ha-dd");
+      res.send({
+        "redirect_url": "/ha-dd"
+      })
     }
   });
 });

@@ -206,16 +206,15 @@ router.put("/:id/truck", (req, res) => {
 // SlotDate Test
 router.put("/:id/slotDate", (req, res) => {
   console.log("route hit")
-  deliveryDataHA.findByIdAndUpdate(req.params.id, { ["Slot Date"]: req.body.slotDate }, (err, found) => {
+  deliveryDataHA.findByIdAndUpdate(req.params.id, { ["Slot Date"]: req.body["Slot Date"] }, (err, found) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(req.body.slotDate);
+      console.log(req.body["Slot Date"]);
       res.redirect("/ha-dd");
     }
   });
 });
-
 
 // =========================================================================
 // DESTROY route - delete selected line from DD list

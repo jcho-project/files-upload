@@ -34,13 +34,15 @@ $(".slotDate-td").dblclick(function (e) {
 $(".slotDate-td").on("keyup", ".slotInput", function (e) {
   if (e.keyCode === 13) {
     let url = "/ha-dd/" + $(".slotDate-td").attr("data-id") + "/slotDate?_method=PUT"
-    let inputValue = $(".slotInput").val()
+    let inputValue = new Date($(".slotInput").val()).toUTCString();
+
+    console.log(inputValue)
 
     $.ajax({
       method: "PUT",
       url: url,
       dataType: "json",
-      data: { "Slot Date": $(".slotInput").val() },
+      data: { "Slot Date": inputValue },
       success: function (response) {
         window.location.href = response.redirect_url;
       }

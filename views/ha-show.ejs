@@ -85,7 +85,15 @@
             <td><%= detail["Order Qty"] %></td>
             <td><%= detail["Bill To Name"] %></td>
             <td><%= detail["Inventory Org"] %></td>
-            <td class="slotDate-td" data-id="<%= detail._id %>"><%= detail["Slot Date"] %></td>
+            <td class="slotDate-td" data-id="<%= detail._id %>">
+              <% let month = detail["Slot Date"].getMonth() + 1 %>
+              <% let day = detail["Slot Date"].getDate() %>
+              <% let year = detail["Slot Date"].getFullYear() %>
+
+              <%= month + "/" + day + "/" + year %>
+
+              <!-- (date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear() -->
+            </td>
             <td><%= detail["Slot Time"] %></td>
             <td><%= detail["Reservation No"] %></td>
             <td><%= detail["Status"] %></td>

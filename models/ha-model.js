@@ -101,7 +101,7 @@ let deliveryDataSchemaHA = new mongoose.Schema({
   ["RRP Tax Exclude"]: String,
   ["SO FAP Flag"]: String,
   marked: Boolean,
-  ["Slot Date"]: String,
+  ["Slot Date"]: Date,
   ["Slot Time"]: Date,
   ["Reservation No"]: String,
   ["Status"]: String

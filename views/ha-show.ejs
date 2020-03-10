@@ -86,15 +86,29 @@
             <td><%= detail["Bill To Name"] %></td>
             <td><%= detail["Inventory Org"] %></td>
             <td class="slotDate-td" data-id="<%= detail._id %>">
+              <% if (detail["Slot Date"] === null) { %>
+              <%= detail["Slot Date"] %>
+              <% } else { %>
               <% let month = detail["Slot Date"].getMonth() + 1 %>
               <% let day = detail["Slot Date"].getDate() %>
               <% let year = detail["Slot Date"].getFullYear() %>
 
-              <%= month + "/" + day + "/" + year %>
+              <% if (month < 10) { %>
+              <% month = "0" + month; %>
+              <% } %>
+              <% if (day < 10) { %>
+              <% day = "0" + day; %>
+              <% } %>
 
-              <!-- (date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear() -->
+              <%= month + "/" + day + "/" + year %>
+              <% } %>
             </td>
-            <td><%= detail["Slot Time"] %></td>
+            <td class="slotTime-td">
+              <% let slotTime = detail["Slot Date"].toUTCString() %>
+              <% slotTime = slotTime.split(" ") %>
+
+              <%= slotTime[4].slice(0, 2) + ":" + slotTime[4].slice(3, 5) %>
+            </td>
             <td><%= detail["Reservation No"] %></td>
             <td><%= detail["Status"] %></td>
             <td><%= detail["Sub- Inventory"] %></td>

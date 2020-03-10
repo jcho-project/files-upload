@@ -22,10 +22,7 @@ for (let i = 0; i < truckTd.length; i++) {
 
 // Slot Date input creation
 $(".slotDate-td").dblclick(function (e) {
-  // let form = $(`<form><form/>`)
   let input = $("<input />", { class: "slotInput", type: "text", name: "slotDate" });
-
-  // form.append(input);
 
   $(this).append(input);
 });
@@ -33,10 +30,8 @@ $(".slotDate-td").dblclick(function (e) {
 // Slot Date input submit and db update ajax PUT call
 $(".slotDate-td").on("keyup", ".slotInput", function (e) {
   if (e.keyCode === 13) {
-    let url = "/ha-dd/" + $(".slotDate-td").attr("data-id") + "/slotDate?_method=PUT"
-    let inputValue = new Date($(".slotInput").val()).toUTCString();
-
-    console.log(inputValue)
+    let url = "/ha-dd/" + $(this).parent().attr("data-id") + "/slotDate?_method=PUT"
+    let inputValue = new Date($(".slotInput").val() + " UTC");
 
     $.ajax({
       method: "PUT",
@@ -46,9 +41,36 @@ $(".slotDate-td").on("keyup", ".slotInput", function (e) {
       success: function (response) {
         window.location.href = response.redirect_url;
       }
-    })
+    });
   }
-})
+});
+
+// Slot Time input creation
+$(".slotTime-td").dblclick(function (e) {
+  let input = $("<input />", { class: "slotTimeInput", type: "text", name: "slotTime" });
+
+  $(this).append(input);
+});
+
+// Slot Time input submit and db update ajax PUT call
+$(".slotTime-td").on("keyup", ".slotTimeInput", function (e) {
+  if (e.keyCode === 13) {
+    let url = "/ha-dd/" + $(this).parent().prev().attr("data-id") + "/slotTime?_method_PUT";
+    let inputValue = $(this).val();
+
+    inputValue = inputValue.split(":");
+
+    $.ajax({
+      method: "PUT",
+      url: url,
+      dataType: "json",
+      data: { "Slot Time": inputValue },
+      success: function (response) {
+        window.location.href = response.redirect_url;
+      }
+    });
+  }
+});
 
 // DataTables
 $(document).ready(function () {

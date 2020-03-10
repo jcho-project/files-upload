@@ -203,16 +203,41 @@ router.put("/:id/truck", (req, res) => {
   });
 });
 
-// SlotDate Test
+// Update Slot Date
 router.put("/:id/slotDate", (req, res) => {
   deliveryDataHA.findByIdAndUpdate(req.params.id, { ["Slot Date"]: req.body["Slot Date"] }, (err, found) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(req.body["Slot Date"]);
       res.send({
         "redirect_url": "/ha-dd"
       })
+    }
+  });
+});
+
+// Update Slot Time
+router.put("/:id/slotTime", (req, res) => {
+  deliveryDataHA.findById(req.params.id, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      let newHour = parseInt(req.body["Slot Time"][0]) + 1;
+      let newMinutes = parseInt(req.body["Slot Time"][1]);
+
+      found["Slot Date"] = found["Slot Date"].setHours(newHour, newMinutes, 0);
+
+      deliveryDataHA.updateOne({ "_id": req.params.id }, { $set: { ["Slot Date"]: found["Slot Date"] } }, (err, updated) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("updated");
+        }
+      });
+
+      res.send({
+        "redirect_url": "/ha-dd"
+      });
     }
   });
 });

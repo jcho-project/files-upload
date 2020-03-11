@@ -1,3 +1,7 @@
+// =========================================================================
+// Truck Update
+// =========================================================================
+
 let markForm = document.getElementsByClassName("mark");
 let truckForm = document.getElementsByClassName("truck-update");
 let truckTd = document.getElementsByClassName("truck-td")
@@ -20,11 +24,17 @@ for (let i = 0; i < truckTd.length; i++) {
   });
 };
 
+// =========================================================================
+// Slot Date & Time Update
+// =========================================================================
+
 // Slot Date input creation
 $(".slotDate-td").dblclick(function (e) {
-  let input = $("<input />", { class: "slotInput", type: "text", name: "slotDate" });
+  if (!$(this).children(".slotInput").length) {
+    let input = $("<input />", { class: "slotInput", type: "date", name: "slotDate", autofocus: true });
 
-  $(this).append(input);
+    $(this).append(input);
+  }
 });
 
 // Slot Date input submit and db update ajax PUT call
@@ -47,9 +57,11 @@ $(".slotDate-td").on("keyup", ".slotInput", function (e) {
 
 // Slot Time input creation
 $(".slotTime-td").dblclick(function (e) {
-  let input = $("<input />", { class: "slotTimeInput", type: "text", name: "slotTime" });
+  if (!$(this).children(".slotTimeInput").length) {
+    let input = $("<input />", { class: "slotTimeInput", type: "text", name: "slotTime", autofocus: true });
 
-  $(this).append(input);
+    $(this).append(input);
+  }
 });
 
 // Slot Time input submit and db update ajax PUT call
@@ -72,7 +84,42 @@ $(".slotTime-td").on("keyup", ".slotTimeInput", function (e) {
   }
 });
 
+// =========================================================================
+// Reservation No. Update
+// =========================================================================
+
+$(".reservation-no").dblclick(function (e) {
+  if (!$(this).children(".reservationInput").length) {
+    let input = $("<input />", { class: "reservationInput", type: "text", name: "reservation-no", autofocus: true });
+
+    $(this).append(input);
+  }
+});
+
+$(".reservation-no").on("keyup", ".reservationInput", function (e) {
+  if (e.keyCode === 13) {
+    let url = "/ha-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/reservationNo?_method_PUT"
+    let inputValue = $(this).val();
+
+    $.ajax({
+      method: "PUT",
+      url: url,
+      dataType: "json",
+      data: { "Reservation No": inputValue },
+      success: function (response) {
+        window.location.href = response.redirect_url;
+      }
+    })
+  }
+});
+
+// =========================================================================
+// Datatables Initialization
+// =========================================================================
+
 // DataTables
 $(document).ready(function () {
-  $('#dataTable').DataTable();
+  $('#dataTable').DataTable({
+    "pageLength": 50
+  });
 });

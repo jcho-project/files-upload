@@ -104,12 +104,16 @@
               <% } %>
             </td>
             <td class="slotTime-td">
+              <% if (detail["Slot Date"] === null) { %>
+              <%= detail["Slot Date"] %>
+              <% } else { %>
               <% let slotTime = detail["Slot Date"].toUTCString() %>
               <% slotTime = slotTime.split(" ") %>
 
               <%= slotTime[4].slice(0, 2) + ":" + slotTime[4].slice(3, 5) %>
+              <% } %>
             </td>
-            <td><%= detail["Reservation No"] %></td>
+            <td class="reservation-no"><%= detail["Reservation No"] %></td>
             <td><%= detail["Status"] %></td>
             <td><%= detail["Sub- Inventory"] %></td>
             <td><%= detail["Order No"] %></td>

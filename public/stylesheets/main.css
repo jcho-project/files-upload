@@ -39,3 +39,7 @@ container {
 input {
   width: 100%;
 }
+
+.hide-text{
+  font-size: 0;
+}

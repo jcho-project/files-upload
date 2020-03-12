@@ -114,7 +114,16 @@
               <% } %>
             </td>
             <td class="reservation-no"><%= detail["Reservation No"] %></td>
-            <td><%= detail["Status"] %></td>
+            <!-- <td><%= detail["Status"] %></td> -->
+            <td>
+              <select name="deliveryStatus" id="statusDropdown">
+                <option value="Cancel">Cancel</option>
+                <option value="Carrier Request">Carrier Req.</option>
+                <option value="Slot Request">Slot Req.</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Closed">Closed</option>
+              </select>
+            </td>
             <td><%= detail["Sub- Inventory"] %></td>
             <td><%= detail["Order No"] %></td>
             <td><%= detail["Line No"] %></td>

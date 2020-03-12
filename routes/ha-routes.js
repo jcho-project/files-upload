@@ -248,9 +248,15 @@ router.put("/:id/reservationNo", (req, res) => {
     } else {
       res.send({
         "redirect_url": "/ha-dd"
-      })
+      });
     }
-  })
+  });
+});
+
+// Update Status
+router.put("/:id/status", (req, res) => {
+  console.log(req.body);
+  console.log(req.query);
 })
 
 // =========================================================================

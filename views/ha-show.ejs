@@ -117,11 +117,13 @@
             <td>
               <form action="/ha-dd/<%= detail._id %>/status?_method=PUT" method="POST">
                 <select name="statusDropdown" id="statusDropdown" onchange="this.form.submit()">
-                  <option value="Cancel">Cancel</option>
-                  <option value="Carrier Request">Carrier Req.</option>
-                  <option value="Slot Request">Slot Req.</option>
-                  <option value="Confirmed">Confirmed</option>
-                  <option value="Closed">Closed</option>
+                  <% let dataValidation = ["To Do", "Cancel", "Carrier-Request", "Slot-Request", "Confirmed", "Closed"] %>
+
+                  <% for (let i = 0; i < dataValidation.length; i++) { %>
+                  <option value=<%= dataValidation[i] %> <% if (detail["Status"] === dataValidation[i]) { %>
+                    <%= "selected" %> <% } %>>
+                    <%= dataValidation[i] %></option>
+                  <% } %>
                 </select>
               </form>
             </td>

@@ -227,6 +227,8 @@ router.put("/:id/slotTime", (req, res) => {
 
       found["Slot Date"] = found["Slot Date"].setHours(newHour, newMinutes, 0);
 
+      console.log(found["Slot Date"]);
+
       deliveryDataHA.updateOne({ "_id": req.params.id }, { $set: { ["Slot Date"]: found["Slot Date"] } }, (err, updated) => {
         if (err) {
           console.log(err);
@@ -255,9 +257,14 @@ router.put("/:id/reservationNo", (req, res) => {
 
 // Update Status
 router.put("/:id/status", (req, res) => {
-  console.log(req.body);
-  console.log(req.query);
-})
+  deliveryDataHA.findByIdAndUpdate(req.params.id, { ["Status"]: req.body["statusDropdown"] }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/ha-dd");
+    }
+  });
+});
 
 // =========================================================================
 // DESTROY route - delete selected line from DD list

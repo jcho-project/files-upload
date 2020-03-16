@@ -47,6 +47,8 @@ $(".slotDate-td").on("keyup", ".slotInput", function (e) {
     let url = "/ha-dd/" + $(this).parent().attr("data-id") + "/slotDate?_method=PUT"
     let inputValue = new Date($(".slotInput").val() + " UTC");
 
+    inputValue.setTime(inputValue.getTime() - new Date().getTimezoneOffset() * 60 * 1000)
+
     $.ajax({
       method: "PUT",
       url: url,

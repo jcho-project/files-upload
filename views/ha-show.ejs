@@ -116,7 +116,7 @@
             <td class="reservation-no"><%= detail["Reservation No"] %></td>
             <td>
               <form action="/ha-dd/<%= detail._id %>/status?_method=PUT" method="POST">
-                <select name="statusDropdown" id="statusDropdown" onchange="this.form.submit()">
+                <select name="statusDropdown" onchange="this.form.submit()">
                   <% let dataValidation = ["To Do", "Cancel", "Carrier-Request", "Slot-Request", "Confirmed", "Closed"] %>
 
                   <% for (let i = 0; i < dataValidation.length; i++) { %>

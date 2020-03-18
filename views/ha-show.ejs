@@ -73,13 +73,7 @@
           <% data.forEach((detail) => { %>
           <tr>
             <td class="truck-td">
-              <form class="truck-update" action="/ha-dd/<%= detail._id %>/truck?_method=PUT" method="POST">
-                <% if (detail.Truck === "") { %>
-                <input type="text" name="truck">
-                <% } else { %>
-                <%= detail.Truck %>
-                <% } %>
-              </form>
+              <%= detail["Truck"] %>
             </td>
             <td><%= detail["Model"] %></td>
             <td><%= detail["Order Qty"] %></td>

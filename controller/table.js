@@ -2,27 +2,58 @@
 // Truck Update
 // =========================================================================
 
-let markForm = document.getElementsByClassName("mark");
-let truckForm = document.getElementsByClassName("truck-update");
-let truckTd = document.getElementsByClassName("truck-td")
+// let markForm = document.getElementsByClassName("mark");
+// let truckForm = document.getElementsByClassName("truck-update");
+// let truckTd = document.getElementsByClassName("truck-td")
 
-// Select Column onChange submit
-for (let i = 0; i < markForm.length; i++) {
-  markForm[i].addEventListener("change", function () {
-    markForm[i].submit();
-  });
-};
+// // Select Column onChange submit
+// for (let i = 0; i < markForm.length; i++) {
+//   markForm[i].addEventListener("change", function () {
+//     markForm[i].submit();
+//   });
+// };
 
-// Double Click for inline input field creation
-for (let i = 0; i < truckTd.length; i++) {
-  truckTd[i].addEventListener("dblclick", function (e) {
-    let input = document.createElement("input");
+// // Double Click for inline input field creation
+// for (let i = 0; i < truckTd.length; i++) {
+//   truckTd[i].addEventListener("dblclick", function (e) {
+//     let input = document.createElement("input");
 
-    truckTd[i].innerHTML = ""
+//     truckTd[i].innerHTML = ""
 
-    truckTd[i].appendChild(input);
-  });
-};
+//     truckTd[i].appendChild(input);
+//   });
+// };
+
+// Truck input creation
+$(".truck-td").dblclick(function (e) {
+  if (!$(this).children(".truckInput").length) {
+    if (($(this).length)) {
+      $(this).text("")
+    }
+  }
+
+  let input = $("<input />", { class: "truckInput", type: "text", name: "truckNumber", autofocus: true });
+
+  $(this).append(input);
+});
+
+// Truck input submit and db update ajax PUT call
+$(".truck-td").on("keyup", ".truckInput", function (e) {
+  if (e.keyCode === 13) {
+    let url = "/ha-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/truck?_method=PUT"
+    let inputValue = $(this).val()
+
+    $.ajax({
+      method: "PUT",
+      url: url,
+      dataType: "json",
+      data: { truck: inputValue },
+      success: function (response) {
+        window.location.href = response.redirect_url;
+      }
+    })
+  }
+})
 
 // =========================================================================
 // Slot Date & Time Update

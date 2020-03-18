@@ -198,7 +198,9 @@ router.put("/:id/truck", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect("/ha-dd");
+      res.send({
+        "redirect_url": "/ha-dd"
+      });
     }
   });
 });
@@ -209,9 +211,10 @@ router.put("/:id/slotDate", (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      console.log("route hit")
       res.send({
         "redirect_url": "/ha-dd"
-      })
+      });
     }
   });
 });

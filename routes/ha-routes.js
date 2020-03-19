@@ -211,7 +211,7 @@ router.put("/:id/slotDate", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("route hit")
+      console.log(req.body["Slot Date"])
       res.send({
         "redirect_url": "/ha-dd"
       });
@@ -274,18 +274,14 @@ router.put("/:id/status", (req, res) => {
 // =========================================================================
 
 // Destroy routes for HA
-router.delete("/:id", (req, res) => {
-  deliveryDataHA.deleteMany({ marked: true }, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/ha-dd");
-    }
-  });
-});
-
 router.delete("/", (req, res) => {
-  deliveryDataHA.deleteMany({}, (err) => {
+  deliveryDataHA.deleteMany(
+    {
+      _id: {
+        
+      }
+  },
+  (err) => {
     if (err) {
       console.log(err);
     } else {

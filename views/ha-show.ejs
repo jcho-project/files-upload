@@ -5,9 +5,6 @@
 <!-- ============================================================================================= -->
 <!-- Button for Add DD -->
 <!-- ============================================================================================= -->
-<button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
-  Add HA DD's
-</button>
 
 <!-- Add DD Modal -->
 <div class="modal fade" id="he-modal">
@@ -39,7 +36,12 @@
 <!-- ============================================================================================= -->
 <div id="display-card" class="card shadow mb-4">
   <div class="card-header">
-    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    <h6 class="m-0 font-weight-bold text-primary datatables-header">[ HA ] DIRECT DELIVERY</h6>
+
+    <div class="header-buttons">
+      <button class="add-dd btn btn-primary btn-sm" data-toggle="modal" data-target="#he-modal">Add</button>
+      <button class="delete-dd btn btn-danger btn-sm">Delete</button>
+    </div>
   </div>
   <div class="card-body">
     <div class="table-responsive">
@@ -58,15 +60,8 @@
             <th scope="col">Line_Status</th>
             <th scope="col">Order_No</th>
             <th scope="col">Line_No</th>
-            <th scope="col">Select</th>
             <th scope="col">Detail</th>
-            <th scope="col">
-              <form action="/ha-dd?_method=DELETE" method="POST">
-                <div class="text-center">
-                  <button class="p-1 btn btn-danger btn-sm">Delete_All</button>
-                </div>
-              </form>
-            </th>
+            <th scope="col">Select</th>
           </tr>
         </thead>
         <tbody>
@@ -124,24 +119,16 @@
             <td><%= detail["Sub- Inventory"] %></td>
             <td><%= detail["Order No"] %></td>
             <td><%= detail["Line No"] %></td>
-            <td>
-              <form class="mark" action="/ha-dd/<%= detail._id %>?_method=PUT" method="POST">
-                <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
-              </form>
-            </td>
+
             <td>
               <form action="/ha-dd/<%= detail._id %>" method="GET">
                 <div class="text-center">
-                  <button class="p-1 btn btn-outline-info btn-sm">Info</button>
+                  <button class="p-1 btn btn-outline-info">?</button>
                 </div>
               </form>
             </td>
             <td>
-              <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
-                <div class="text-center">
-                  <button class="btn btn-outline-danger btn-sm">X</button>
-                </div>
-              </form>
+              <input class="checkbox checkbox-align" type="checkbox" name="checkbox">
             </td>
           </tr>
           <% }) %>

@@ -2,28 +2,6 @@
 // Truck Update
 // =========================================================================
 
-// let markForm = document.getElementsByClassName("mark");
-// let truckForm = document.getElementsByClassName("truck-update");
-// let truckTd = document.getElementsByClassName("truck-td")
-
-// // Select Column onChange submit
-// for (let i = 0; i < markForm.length; i++) {
-//   markForm[i].addEventListener("change", function () {
-//     markForm[i].submit();
-//   });
-// };
-
-// // Double Click for inline input field creation
-// for (let i = 0; i < truckTd.length; i++) {
-//   truckTd[i].addEventListener("dblclick", function (e) {
-//     let input = document.createElement("input");
-
-//     truckTd[i].innerHTML = ""
-
-//     truckTd[i].appendChild(input);
-//   });
-// };
-
 // Truck input creation
 $(".truck-td").dblclick(function (e) {
   if (!$(this).children(".truckInput").length) {
@@ -56,7 +34,7 @@ $(".truck-td").on("keyup", ".truckInput", function (e) {
 })
 
 // =========================================================================
-// Slot Date & Time Update
+// Slot Date Update
 // =========================================================================
 
 // Slot Date input creation
@@ -91,6 +69,10 @@ $(".slotDate-td").on("keyup", ".slotInput", function (e) {
     });
   }
 });
+
+// =========================================================================
+// Slot Time Update
+// =========================================================================
 
 // Slot Time input creation
 $(".slotTime-td").dblclick(function (e) {
@@ -159,12 +141,46 @@ $(".reservation-no").on("keyup", ".reservationInput", function (e) {
 });
 
 // =========================================================================
-// Datatables Initialization
+// Datatables Initialization & Custom Sort
 // =========================================================================
 
-// DataTables
+// Custom Sorting including Empty Cells
+jQuery.extend(jQuery.fn.dataTableExt.oSort, {
+  "non-empty-string-asc": function (str1, str2) {
+    if (str1 == "")
+      return 1;
+    if (str2 == "")
+      return -1;
+    return ((str1 < str2) ? -1 : ((str1 > str2) ? 1 : 0));
+  },
+
+  "non-empty-string-desc": function (str1, str2) {
+    if (str1 == "")
+      return 1;
+    if (str2 == "")
+      return -1;
+    return ((str1 < str2) ? 1 : ((str1 > str2) ? -1 : 0));
+  }
+});
+
+// DataTables Initialization
 $(document).ready(function () {
   $('#dataTable').DataTable({
-    "pageLength": 50
+    "pageLength": 50,
+    columnDefs: [
+      { type: "non-empty-string", targets: 0 },
+      { type: "non-empty-string", targets: 5 },
+      { type: "non-empty-string", targets: 6 },
+      { type: "non-empty-string", targets: 7 }
+    ]
   });
+});
+
+// =========================================================================
+// Delete Selected & Checkboxes
+// =========================================================================
+$(".delete-dd").click(() => {
+  if ($(".checkbox").is(":checked")) {
+    console.log($(this))
+  }
 });

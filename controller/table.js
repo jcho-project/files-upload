@@ -181,6 +181,6 @@ $(document).ready(function () {
 // =========================================================================
 $(".delete-dd").click(() => {
   if ($(".checkbox").is(":checked")) {
-    console.log($(this))
+    console.log($(".checkbox"))
   }
 });

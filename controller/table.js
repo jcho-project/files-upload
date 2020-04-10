@@ -141,6 +141,29 @@ $(".reservation-no").on("keyup", ".reservationInput", function (e) {
 });
 
 // =========================================================================
+// Delete Selected & Checkboxes
+// =========================================================================
+
+$(".delete-dd").click(() => {
+  let url = "/ha-dd/" + $(".checkbox:checked").parent().siblings(".slotDate-td").attr("data-id") + "?_method_DELETE";
+  let ids = [];
+
+  $(".checkbox:checked").each(function (index, value) {
+    console.log(value);
+    // ids.push(value.parent().siblings(".slotDate-td").attr("data-id"))
+  });
+
+  console.log(ids);
+
+  // $.ajax({
+  //   method: "DELETE",
+  //   url: url,
+  //   dataType: "json",
+  //   data: { "Delete Id": ids }
+  // })
+});
+
+// =========================================================================
 // Datatables Initialization & Custom Sort
 // =========================================================================
 
@@ -174,13 +197,4 @@ $(document).ready(function () {
       { type: "non-empty-string", targets: 7 }
     ]
   });
-});
-
-// =========================================================================
-// Delete Selected & Checkboxes
-// =========================================================================
-$(".delete-dd").click(() => {
-  if ($(".checkbox").is(":checked")) {
-    console.log($(".checkbox"))
-  }
 });

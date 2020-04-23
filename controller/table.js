@@ -146,14 +146,23 @@ $(".reservation-no").on("keyup", ".reservationInput", function (e) {
 
 $(".delete-dd").click(() => {
   let url = "/ha-dd/" + $(".checkbox:checked").parent().siblings(".slotDate-td").attr("data-id") + "?_method_DELETE";
+  let tds = [];
   let ids = [];
 
-  $(".checkbox:checked").each(function (index, value) {
-    console.log(value);
-    // ids.push(value.parent().siblings(".slotDate-td").attr("data-id"))
-  });
+  if ($(".checkbox-td:checked")) {
+    console.log("checked");
+  }
 
-  console.log(ids);
+  // $(".checkbox:checked").each(function (index, value) {
+  //   console.log(value);
+  //   // ids.push(value.siblings(".slotDate-td").attr("data-id"))
+  // });
+
+  // console.log($(".checkbox-td").siblings(".slotDate-td").attr("data-id"));
+
+  // console.log($(".checkbox-td").attr("data-id"))
+
+  // console.log(ids);
 
   // $.ajax({
   //   method: "DELETE",

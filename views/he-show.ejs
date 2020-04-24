@@ -2,10 +2,11 @@
 
 <br>
 
-<button class="btn btn-primary" data-toggle="modal" data-target="#he-modal">
-  Add HE DD's
-</button>
+<!-- ============================================================================================= -->
+<!-- Button for Add DD -->
+<!-- ============================================================================================= -->
 
+<!-- Add DD Modal -->
 <div class="modal fade" id="he-modal">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
@@ -30,72 +31,112 @@
   </div>
 </div>
 
-<div class="table-responsive">
-  <table id="excel_table" class="table table-hover table-striped table-bordered table-sm">
-    <thead class="thead-dark">
-      <tr>
-        <th scope="col">Truck</th>
-        <th scope="col">Model</th>
-        <th scope="col">Units</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Product Grade</th>
-        <th scope="col">CBM</th>
-        <th scope="col">Select</th>
-        <th scope="col">Detail</th>
-        <th scope="col">
-          <form action="/he-dd?_method=DELETE" method="POST">
-            <div class="text-center">
-              <button class="btn btn-danger btn-sm">Delete All</button>
-            </div>
-          </form>
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <% data.forEach((detail) => { %>
-      <tr>
-        <td><%= detail.truck %></td>
-        <td><%= detail.model %></td>
-        <td><%= detail.units %></td>
-        <td><%= detail.quantity %></td>
-        <td><%= detail.product_grade %></td>
-        <td><%= detail.cbm %></td>
-        <td>
-          <form class="mark" action="/he-dd/<%= detail._id %>?_method=PUT" method="POST">
-            <input class="checkbox" type="checkbox" name="checkbox" <%= detail.marked ? "checked" : ""  %>>
-          </form>
-        </td>
-        <td>
-          <form action="/ha-dd/<%= detail._id %>?_method=DELETE" method="POST">
-            <div class="text-center">
-              <button class="btn btn-outline-info btn-sm">Info</button>
-            </div>
-          </form>
-        </td>
-        <td>
-          <form action="/he-dd/<%= detail._id %>?_method=DELETE" method="POST">
-            <div class="text-center">
-              <button class="btn btn-outline-danger btn-sm">X</button>
-            </div>
-          </form>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<!-- ============================================================================================= -->
+<!-- Display DD Table -->
+<!-- ============================================================================================= -->
+
+<div id="display-card" class="card shadow mb-4">
+  <div class="card-header">
+    <h6 class="m-0 font-weight-bold text-primary datatables-header">[ HE ] DIRECT DELIVERY</h6>
+
+    <div class="header-buttons">
+      <button class="add-dd btn btn-primary btn-sm" data-toggle="modal" data-target="#he-modal">Add</button>
+      <button class="delete-dd btn btn-danger btn-sm">Delete</button>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-sm table-striped table-bordered" id="he-dataTable">
+        <thead>
+          <tr>
+            <th scope="col">Truck</th>
+            <th scope="col">Model</th>
+            <th scope="col">Units</th>
+            <th scope="col">Customer</th>
+            <th scope="col">W/H</th>
+            <th scope="col">Slot_Date</th>
+            <th scope="col">Slot_Time</th>
+            <th scope="col">Reserv._No</th>
+            <th scope="col">Status</th>
+            <th scope="col">Line_Status</th>
+            <th scope="col">Order_No</th>
+            <th scope="col">Line_No</th>
+            <th scope="col">Detail</th>
+            <th scope="col">Select</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach((detail) => { %>
+          <tr>
+            <td class="truck-td">
+              <%= detail["Truck"] %>
+            </td>
+            <td><%= detail["Model"] %></td>
+            <td><%= detail["Order Qty"] %></td>
+            <td><%= detail["Bill To Name"] %></td>
+            <td><%= detail["Inventory Org"] %></td>
+            <td class="slotDate-td" data-id="<%= detail._id %>">
+              <% if (detail["Slot Date"] === null) { %>
+              <%= detail["Slot Date"] %>
+              <% } else { %>
+              <% let month = detail["Slot Date"].getMonth() + 1 %>
+              <% let day = detail["Slot Date"].getDate() %>
+              <% let year = detail["Slot Date"].getFullYear() %>
+
+              <% if (month < 10) { %>
+              <% month = "0" + month; %>
+              <% } %>
+              <% if (day < 10) { %>
+              <% day = "0" + day; %>
+              <% } %>
+
+              <%= month + "/" + day + "/" + year %>
+              <% } %>
+            </td>
+            <td class="slotTime-td">
+              <% if (detail["Slot Date"] === null) { %>
+              <%= detail["Slot Date"] %>
+              <% } else { %>
+              <% let slotTime = detail["Slot Date"].toUTCString() %>
+              <% slotTime = slotTime.split(" ") %>
+
+              <%= slotTime[4].slice(0, 2) + ":" + slotTime[4].slice(3, 5) %>
+              <% } %>
+            </td>
+            <td class="reservation-no"><%= detail["Reservation No"] %></td>
+            <td>
+              <form action="/ha-dd/<%= detail._id %>/status?_method=PUT" method="POST">
+                <select name="statusDropdown" onchange="this.form.submit()">
+                  <% let dataValidation = ["To Do", "Cancel", "Carrier-Request", "Slot-Request", "Confirmed", "Closed"] %>
+
+                  <% for (let i = 0; i < dataValidation.length; i++) { %>
+                  <option value=<%= dataValidation[i] %> <% if (detail["Status"] === dataValidation[i]) { %>
+                    <%= "selected" %> <% } %>>
+                    <%= dataValidation[i] %></option>
+                  <% } %>
+                </select>
+              </form>
+            </td>
+            <td><%= detail["Sub- Inventory"] %></td>
+            <td><%= detail["Order No"] %></td>
+            <td><%= detail["Line No"] %></td>
+
+            <td>
+              <form action="/ha-dd/<%= detail._id %>" method="GET">
+                <div class="text-center">
+                  <button class="p-1 btn btn-outline-info">?</button>
+                </div>
+              </form>
+            </td>
+            <td class="checkbox-td" data-id="<%= detail._id %>">
+              <input class="checkbox checkbox-align" type="checkbox" name="checkbox">
+            </td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
-
-<br>
-
-<script type="text/javascript">
-  let markForm = document.getElementsByClassName("mark");
-  let checkbox = document.getElementsByClassName("checkbox")
-
-  for (let i = 0; i < markForm.length; i++) {
-    markForm[i].addEventListener("change", function () {
-      markForm[i].submit();
-    })
-  }
-</script>
 
 <%- include("./partials/footer") %>

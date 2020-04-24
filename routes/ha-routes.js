@@ -2,10 +2,6 @@ const express = require("express"),
   router = express.Router(),
   deliveryDataHA = require("../models/ha-model");
 
-router.post("/", (req, res) => {
-  console.log(req.body);
-})
-
 // =========================================================================
 // Display HA DD List & Detail Info Page
 // =========================================================================
@@ -278,7 +274,7 @@ router.delete("/", (req, res) => {
   deliveryDataHA.deleteMany(
     {
       _id: {
-        
+
       }
   },
   (err) => {

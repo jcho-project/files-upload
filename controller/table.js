@@ -197,7 +197,19 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
 
 // DataTables Initialization
 $(document).ready(function () {
-  $('#dataTable').DataTable({
+  $('#ha-dataTable').DataTable({
+    "pageLength": 50,
+    columnDefs: [
+      { type: "non-empty-string", targets: 0 },
+      { type: "non-empty-string", targets: 5 },
+      { type: "non-empty-string", targets: 6 },
+      { type: "non-empty-string", targets: 7 }
+    ]
+  });
+});
+
+$(document).ready(function () {
+  $('#he-dataTable').DataTable({
     "pageLength": 50,
     columnDefs: [
       { type: "non-empty-string", targets: 0 },

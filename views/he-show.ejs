@@ -72,7 +72,7 @@
               <%= detail["Truck"] %>
             </td>
             <td><%= detail["Model"] %></td>
-            <td><%= detail["Order Qty"] %></td>
+            <td><%= detail["Ordered Qty"] %></td>
             <td><%= detail["Bill To Name"] %></td>
             <td><%= detail["Inventory Org"] %></td>
             <td class="slotDate-td" data-id="<%= detail._id %>">
@@ -138,5 +138,7 @@
     </div>
   </div>
 </div>
+
+<script src="../controller/table.js"></script>
 
 <%- include("./partials/footer") %>

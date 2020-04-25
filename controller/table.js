@@ -195,7 +195,7 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
   }
 });
 
-// DataTables Initialization
+// DataTables Initialization HA
 $(document).ready(function () {
   $('#ha-dataTable').DataTable({
     "pageLength": 50,
@@ -208,6 +208,7 @@ $(document).ready(function () {
   });
 });
 
+// DataTables Initialization HE
 $(document).ready(function () {
   $('#he-dataTable').DataTable({
     "pageLength": 50,

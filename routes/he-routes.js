@@ -69,7 +69,7 @@ router.post("/upload", (req, res) => {
       ["Ready To Pick"]: refinedData[i]["Ready To Pick"],
       ["Pick Released"]: refinedData[i]["Pick Released"],
       ["Instock Flag"]: refinedData[i]["Instock Flag"],
-      ["Order Qty"]: refinedData[i]["Order Qty"],
+      ["Ordered Qty"]: refinedData[i]["Ordered Qty"],
       ["Unit Selling Price"]: refinedData[i]["Unit Selling Price"],
       ["Sales Amount"]: refinedData[i]["Sales Amount"],
       ["Tax Amount"]: refinedData[i]["Tax Amount"],
@@ -159,6 +159,8 @@ router.post("/upload", (req, res) => {
       ["Status"]: ""
     });
   }
+
+  console.log(newDD)
 
   // Insert into database
   deliveryDataHE.create(newDD, (err, newlyCreated) => {

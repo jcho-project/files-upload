@@ -167,7 +167,6 @@ router.post("/upload", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(newlyCreated);
       res.redirect("/he-dd");
     }
   });

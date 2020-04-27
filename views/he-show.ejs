@@ -105,7 +105,7 @@
             </td>
             <td class="reservation-no"><%= detail["Reservation No"] %></td>
             <td>
-              <form action="/ha-dd/<%= detail._id %>/status?_method=PUT" method="POST">
+              <form action="/he-dd/<%= detail._id %>/status?_method=PUT" method="POST">
                 <select name="statusDropdown" onchange="this.form.submit()">
                   <% let dataValidation = ["To Do", "Cancel", "Carrier-Request", "Slot-Request", "Confirmed", "Closed"] %>
 
@@ -139,6 +139,6 @@
   </div>
 </div>
 
-<script src="../controller/table.js"></script>
+<script src="../controller/he-table.js"></script>
 
 <%- include("./partials/footer") %>

@@ -18,7 +18,7 @@ $(".truck-td").dblclick(function (e) {
 // Truck input submit and db update ajax PUT call
 $(".truck-td").on("keyup", ".truckInput", function (e) {
   if (e.keyCode === 13) {
-    let url = "/ha-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/truck?_method=PUT"
+    let url = "/he-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/truck?_method=PUT"
     let inputValue = $(this).val()
 
     $.ajax({
@@ -53,7 +53,7 @@ $(".slotDate-td").dblclick(function (e) {
 // Slot Date input submit and db update ajax PUT call
 $(".slotDate-td").on("keyup", ".slotInput", function (e) {
   if (e.keyCode === 13) {
-    let url = "/ha-dd/" + $(this).parent().attr("data-id") + "/slotDate?_method=PUT"
+    let url = "/he-dd/" + $(this).parent().attr("data-id") + "/slotDate?_method=PUT"
     let inputValue = new Date($(".slotInput").val() + " UTC");
 
     inputValue.setTime(inputValue.getTime() - new Date().getTimezoneOffset() * 60 * 1000)
@@ -90,7 +90,7 @@ $(".slotTime-td").dblclick(function (e) {
 // Slot Time input submit and db update ajax PUT call
 $(".slotTime-td").on("keyup", ".slotTimeInput", function (e) {
   if (e.keyCode === 13) {
-    let url = "/ha-dd/" + $(this).parent().prev().attr("data-id") + "/slotTime?_method_PUT";
+    let url = "/he-dd/" + $(this).parent().prev().attr("data-id") + "/slotTime?_method_PUT";
     let inputValue = $(this).val();
 
     inputValue = inputValue.split(":");
@@ -125,7 +125,7 @@ $(".reservation-no").dblclick(function (e) {
 
 $(".reservation-no").on("keyup", ".reservationInput", function (e) {
   if (e.keyCode === 13) {
-    let url = "/ha-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/reservationNo?_method_PUT"
+    let url = "/he-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/reservationNo?_method_PUT"
     let inputValue = $(this).val();
 
     $.ajax({
@@ -145,7 +145,7 @@ $(".reservation-no").on("keyup", ".reservationInput", function (e) {
 // =========================================================================
 
 $(".delete-dd").click(() => {
-  let url = "/ha-dd/" + $(".checkbox:checked").parent().siblings(".slotDate-td").attr("data-id") + "?_method_DELETE";
+  let url = "/he-dd/" + $(".checkbox:checked").parent().siblings(".slotDate-td").attr("data-id") + "?_method_DELETE";
   let tds = [];
   let ids = [];
 
@@ -193,19 +193,6 @@ jQuery.extend(jQuery.fn.dataTableExt.oSort, {
       return -1;
     return ((str1 < str2) ? 1 : ((str1 > str2) ? -1 : 0));
   }
-});
-
-// DataTables Initialization HA
-$(document).ready(function () {
-  $('#ha-dataTable').DataTable({
-    "pageLength": 50,
-    columnDefs: [
-      { type: "non-empty-string", targets: 0 },
-      { type: "non-empty-string", targets: 5 },
-      { type: "non-empty-string", targets: 6 },
-      { type: "non-empty-string", targets: 7 }
-    ]
-  });
 });
 
 // DataTables Initialization HE

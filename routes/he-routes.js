@@ -178,7 +178,7 @@ router.post("/upload", (req, res) => {
 
 // Update route for HE
 router.put("/:id", (req, res) => {
-  deliveryData.findById(req.params.id, (err, found) => {
+  deliveryDataHE.findById(req.params.id, (err, found) => {
     if (err) {
       console.log(err);
     } else {
@@ -188,6 +188,84 @@ router.put("/:id", (req, res) => {
     }
   });
 });
+
+// Update truck route for HE
+router.put("/:id/truck", (req, res) => {
+  deliveryDataHE.findByIdAndUpdate(req.params.id, { Truck: req.body.truck }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({
+        "redirect_url": "/he-dd"
+      });
+    }
+  });
+});
+
+// Update Slot Date
+router.put("/:id/slotDate", (req, res) => {
+  deliveryDataHE.findByIdAndUpdate(req.params.id, { ["Slot Date"]: req.body["Slot Date"] }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(req.body["Slot Date"])
+      res.send({
+        "redirect_url": "/he-dd"
+      });
+    }
+  });
+});
+
+// Update Slot Time
+router.put("/:id/slotTime", (req, res) => {
+  deliveryDataHE.findById(req.params.id, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      let newHour = parseInt(req.body["Slot Time"][0]) + 1;
+      let newMinutes = parseInt(req.body["Slot Time"][1]);
+
+      found["Slot Date"] = found["Slot Date"].setHours(newHour, newMinutes, 0);
+
+      console.log(found["Slot Date"]);
+
+      deliveryDataHE.updateOne({ "_id": req.params.id }, { $set: { ["Slot Date"]: found["Slot Date"] } }, (err, updated) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+
+      res.send({
+        "redirect_url": "/he-dd"
+      });
+    }
+  });
+});
+
+// Update Reservation No
+router.put("/:id/reservationNo", (req, res) => {
+  deliveryDataHE.findByIdAndUpdate(req.params.id, { ["Reservation No"]: req.body["Reservation No"] }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send({
+        "redirect_url": "/he-dd"
+      });
+    }
+  });
+});
+
+// Update Status
+router.put("/:id/status", (req, res) => {
+  deliveryDataHE.findByIdAndUpdate(req.params.id, { ["Status"]: req.body["statusDropdown"] }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.redirect("/he-dd");
+    }
+  });
+});
+
 
 // =========================================================================
 // DESTROY route - delete selected line from DD list

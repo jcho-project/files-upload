@@ -19,16 +19,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname));
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/uploads"));
 app.use(methodOverride("_method"));
 
 // Require routes
 const indexRoutes = require("./routes/index"),
   haRoutes = require("./routes/ha-routes"),
-  heRoutes = require("./routes/he-routes");
+  heRoutes = require("./routes/he-routes"),
+  templateRoutes = require("./routes/template-routes");
 
 app.use("/", indexRoutes);
 app.use("/ha-dd", haRoutes);
 app.use("/he-dd", heRoutes);
+app.use("/templates", templateRoutes);
 
 mongoose.connect("mongodb://localhost/dd-dashboard", { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
 

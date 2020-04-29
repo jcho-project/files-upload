@@ -3,6 +3,6 @@ const express = require("express"),
 
 router.get("/", (req, res) => {
   res.render("template")
-})
+});
 
 module.exports = router;

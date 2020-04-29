@@ -58,3 +58,7 @@ input {
 .header-buttons {
   float: right;
 }
+
+.card-deck {
+  margin: 20px auto 20px auto;
+}

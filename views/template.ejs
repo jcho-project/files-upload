@@ -1,31 +1,23 @@
 <%- include("./partials/header") %>
 
+<form ref="uploadForm" id="uploadForm" action="/upload-avatar" method="POST" enctype="multipart/form-data">
+  <input type="file" name="sampleFile">
+  <input type="submit" value="Upload!">
+</form>
+
 <div class="card-deck">
+  <% files.forEach(file => { %>
   <div class="card" style="width: 12rem;">
     <img class="card-img-top" src="/public/icons/excel-icon.png" alt="excel-icon">
     <div class="card-body">
-      <h5 class="card-title">Title</h5>
+      <h5 class="card-title"><%= file %></h5>
       <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <a class="btn btn-primary" href="/uploads/upwork.xlsx">Download</a>
+      <a class="btn btn-primary" href="/uploads/<%= file %>">Download</a>
     </div>
   </div>
-  <div class="card" style="width: 12rem;">
-    <img class="card-img-top" src="/public/icons/excel-icon.png" alt="excel-icon">
-    <div class="card-body">
-      <h5 class="card-title">Title</h5>
-      <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <a class="btn btn-primary" href="/uploads/upwork.xlsx">Download</a>
-    </div>
-  </div>
-  <div class="card" style="width: 12rem;">
-    <img class="card-img-top" src="/public/icons/excel-icon.png" alt="excel-icon">
-    <div class="card-body">
-      <h5 class="card-title">Title</h5>
-      <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <a class="btn btn-primary" href="/uploads/upwork.xlsx">Download</a>
-    </div>
-  </div>
+  <% }) %>
 </div>
 
+<script src="./creator.js"></script>
 
 <%- include("./partials/footer") %>

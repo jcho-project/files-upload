@@ -1,8 +1,14 @@
 const express = require("express"),
-  router = express.Router();
+  router = express.Router(),
+  fs = require("fs"),
+  dirname = "./uploads"
 
 router.get("/", (req, res) => {
-  res.render("template")
+  fs.readdir(dirname, (err, files) => {
+    res.render("template", { files: files })
+  });
 });
+
+
 
 module.exports = router;

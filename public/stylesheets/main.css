@@ -43,10 +43,6 @@ container {
   width: 25px;
 }
 
-input {
-  width: 100%;
-}
-
 .hide-text{
   font-size: 0;
 }
@@ -61,4 +57,5 @@ input {
 
 .card-deck {
   margin: 20px auto 20px auto;
+  width: 80%;
 }

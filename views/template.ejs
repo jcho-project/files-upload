@@ -1,10 +1,37 @@
 <%- include("./partials/header") %>
 
-<form ref="uploadForm" id="uploadForm" action="/templates/upload-avatar" method="POST" enctype="multipart/form-data">
-  <input type="file" name="sampleFile">
-  <input type="submit" value="Upload">
-</form>
+<!-- ============================================================================================= -->
+<!-- HE document creator modal -->
+<!-- ============================================================================================= -->
+<div class="modal fade" id="he-doc-modal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Upload HE Document Creator</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 
+      <form ref="uploadForm" id="uploadForm" action="/templates/upload-avatar" method="POST"
+        enctype="multipart/form-data">
+        <div class="modal-body">
+          <input type="file" name="sampleFile">
+        </div>
+
+        <div class="modal-footer">
+          <button class="btn btn-primary">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#he-doc-modal">HE Document Creator</button>
+
+<!-- ============================================================================================= -->
+<!-- Display templates in directory -->
+<!-- ============================================================================================= -->
 <div class="card-deck">
   <% files.forEach(file => { %>
   <div class="card" style="width: 12rem;">

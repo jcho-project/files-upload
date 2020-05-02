@@ -22,7 +22,6 @@ router.post("/upload-avatar", async (req, res) => {
       });
 
     } else {
-
       // use the name of the input field (i.e."avatar") to retrieve the uploaded file)
       let avatar = req.files.sampleFile;
 

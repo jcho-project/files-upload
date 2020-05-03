@@ -13,26 +13,35 @@ router.get("/", (req, res) => {
 // UPLOAD route - upload document template for further processing
 // =========================================================================
 
-router.post("/upload-avatar", async (req, res) => {
-  try {
-    if (!req.files) {
-      res.send({
-        status: false,
-        message: "No file uploaded"
-      });
+// HE creator
+router.post("/he-creator", async (req, res) => {
+  if (!req.files) {
+    res.redirect("/templates");
+  } else {
+    // use the name of the input field (i.e."avatar") to retrieve the uploaded file)
+    let avatar = req.files.sampleFile;
 
-    } else {
-      // use the name of the input field (i.e."avatar") to retrieve the uploaded file)
-      let avatar = req.files.sampleFile;
+    // use the mv() method to place the file in upload directory (i.e. "uploads")
+    avatar.mv("./uploads/he-creator.xlsx");
 
-      // use the mv() method to place the file in upload directory (i.e. "uploads")
-      avatar.mv("./uploads/" + avatar.name);
+    // redirect to templates page
+    res.redirect("/templates");
+  }
+});
 
-      // redirect to templates page
-      res.redirect("/templates");
-    }
-  } catch (err) {
-    res.status(500).send(err);
+// HA creator
+router.post("/ha-creator", async (req, res) => {
+  if (!req.files) {
+    res.redirect("/templates");
+  } else {
+    // use the name of the input field (i.e."avatar") to retrieve the uploaded file)
+    let avatar = req.files.sampleFile;
+
+    // use the mv() method to place the file in upload directory (i.e. "uploads")
+    avatar.mv("./uploads/ha-creator.xlsx");
+
+    // redirect to templates page
+    res.redirect("/templates");
   }
 });
 

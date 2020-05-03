@@ -58,4 +58,5 @@ container {
 .card-deck {
   margin: 20px auto 20px auto;
   width: 80%;
+  max-width: 800px;
 }

@@ -9,4 +9,6 @@ let desired_cell = worksheet[address_of_cell];
 
 let desired_value = (desired_cell ? desired_cell.v : undefined);
 
+console.log(workbook.__dirname)
+console.log(first_sheet_name);
 console.log(desired_value);

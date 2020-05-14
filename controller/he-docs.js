@@ -1,10 +1,10 @@
 const xlsx = require("xlsx"),
   workbook = xlsx.readFile("./uploads/he-creator.xlsx");
 
-let data = xlsx.utils.sheet_to_json(workbook.Sheets["HE_Factory_(Swiss)"], { header: 1 })
+let data = xlsx.utils.sheet_to_json(workbook.Sheets["test"])
 
 let first_sheet_name = workbook.SheetNames[0];
-let address_of_cell = "D6";
+let address_of_cell = "A1";
 
 let worksheet = workbook.Sheets[first_sheet_name];
 let desired_cell = worksheet[address_of_cell];

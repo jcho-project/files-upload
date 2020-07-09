@@ -51,12 +51,15 @@ $(".slotDate-td").dblclick(function (e) {
 });
 
 // Slot Date input submit and db update ajax PUT call
-$(".slotDate-td").on("keyup", ".slotInput", function (e) {
+$(".slotDate-td").on("keydown", ".slotInput", function (e) {
   if (e.keyCode === 13) {
+    e.preventDefault();
+
     let url = "/he-dd/" + $(this).parent().attr("data-id") + "/slotDate?_method=PUT"
     let inputValue = new Date($(".slotInput").val() + " UTC");
 
-    inputValue.setTime(inputValue.getTime() - new Date().getTimezoneOffset() * 60 * 1000)
+    // inputValue.setTime(inputValue.getTime() - new Date().getTimezoneOffset() * 60 * 1000)
+    inputValue.setTime(inputValue.getTime())
 
     $.ajax({
       method: "PUT",

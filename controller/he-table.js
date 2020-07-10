@@ -114,6 +114,7 @@ $(".slotTime-td").on("keyup", ".slotTimeInput", function (e) {
 // Reservation No. Update
 // =========================================================================
 
+// Reservation No. input creation
 $(".reservation-no").dblclick(function (e) {
   if (!$(this).children(".reservationInput").length) {
     if ($(this).length) {
@@ -126,6 +127,7 @@ $(".reservation-no").dblclick(function (e) {
   }
 });
 
+// Reservation No. input submit and db update ajax PUT call
 $(".reservation-no").on("keyup", ".reservationInput", function (e) {
   if (e.keyCode === 13) {
     let url = "/he-dd/" + $(this).parent().siblings(".slotDate-td").attr("data-id") + "/reservationNo?_method_PUT"

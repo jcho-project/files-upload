@@ -1,6 +1,8 @@
 const express = require("express"),
   router = express.Router(),
-  deliveryDataHE = require("../models/he-model");
+  deliveryDataHE = require("../models/he-model"),
+  xlsx = require("xlsx"),
+  workbook = xlsx.readFile("./uploads/he-creator.xlsx");
 
 // =========================================================================
 // Display HE DD List & Detail Info Page
@@ -222,7 +224,7 @@ router.put("/:id/slotTime", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      let newHour = parseInt(req.body["Slot Time"][0]) + 1;
+      let newHour = parseInt(req.body["Slot Time"][0]) + 2;
       let newMinutes = parseInt(req.body["Slot Time"][1]);
 
       found["Slot Date"] = found["Slot Date"].setHours(newHour, newMinutes, 0);
@@ -291,5 +293,35 @@ router.delete("/", (req, res) => {
     }
   });
 });
+
+// =========================================================================
+// Document Creation Button All Docs
+// =========================================================================
+
+router.put("/alldocs", (req, res) => {
+  console.log("all-docs clicked");
+
+  // let data = xlsx.utils.sheet_to_json(workbook.Sheets["test"])
+
+  // let first_sheet_name = workbook.SheetNames[0];
+  // let address_of_cell = "A1";
+
+  // let worksheet = workbook.Sheets[first_sheet_name];
+  // let desired_cell = worksheet[address_of_cell];
+
+  // let desired_value = (desired_cell ? desired_cell.v : undefined);
+
+  // function wb_has_macro(wb) {
+  //   if (!!wb.vbaraw) {
+  //     console.log("macro available")
+  //   };
+  //   // const sheets = wb.SheetNames.map((n) => wb.Sheets[n]);
+  //   // return sheets.some((ws) => !!ws && ws['!type'] == 'macro');
+  // }
+
+  // console.log(first_sheet_name);
+  // console.log(desired_value);
+  // console.log(data);
+})
 
 module.exports = router;

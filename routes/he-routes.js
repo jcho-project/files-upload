@@ -71,7 +71,7 @@ router.post("/upload", (req, res) => {
       ["Ready To Pick"]: refinedData[i]["Ready To Pick"],
       ["Pick Released"]: refinedData[i]["Pick Released"],
       ["Instock Flag"]: refinedData[i]["Instock Flag"],
-      ["Ordered Qty"]: refinedData[i]["Ordered Qty"],
+      ["Order Qty"]: refinedData[i]["Order Qty"],
       ["Unit Selling Price"]: refinedData[i]["Unit Selling Price"],
       ["Sales Amount"]: refinedData[i]["Sales Amount"],
       ["Tax Amount"]: refinedData[i]["Tax Amount"],
@@ -162,7 +162,8 @@ router.post("/upload", (req, res) => {
     });
   }
 
-  console.log(newDD)
+  console.log(newDD["Customer PO No"])
+  console.log(newDD["Ordered Qty"])
 
   // Insert into database
   deliveryDataHE.create(newDD, (err, newlyCreated) => {
@@ -285,11 +286,14 @@ router.delete("/:id", (req, res) => {
 });
 
 router.delete("/", (req, res) => {
-  deliveryData.deleteMany({}, (err) => {
+  deliveryDataHE.deleteMany({ _id: { $in: req.body["Delete Id"] } }, (err) => {
     if (err) {
       console.log(err);
     } else {
-      res.redirect("/he-dd");
+      console.log(req.body);
+      res.send({
+        "redirect_url": "/he-dd"
+      });
     }
   });
 });

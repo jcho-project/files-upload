@@ -150,18 +150,14 @@ $(".reservation-no").on("keyup", ".reservationInput", function (e) {
 // =========================================================================
 
 $(".delete-dd").click(() => {
-  let url = "/he-dd/" + $(".checkbox:checked").parent().siblings(".slotDate-td").attr("data-id") + "?_method_DELETE";
-  let tds = [];
+  let url = "/he-dd/" + "?_method_DELETE";
   let ids = [];
 
-  if ($(".checkbox-td:checked")) {
-    console.log("checked");
-  }
+  $(".checkbox:checked").each(function (index, value) {
+    ids.push($(this).parent().siblings(".slotDate-td").attr("data-id"));
+  });
 
-  // $(".checkbox:checked").each(function (index, value) {
-  //   console.log(value);
-  //   // ids.push(value.siblings(".slotDate-td").attr("data-id"))
-  // });
+  console.log(ids);
 
   // console.log($(".checkbox-td").siblings(".slotDate-td").attr("data-id"));
 
@@ -169,12 +165,12 @@ $(".delete-dd").click(() => {
 
   // console.log(ids);
 
-  // $.ajax({
-  //   method: "DELETE",
-  //   url: url,
-  //   dataType: "json",
-  //   data: { "Delete Id": ids }
-  // })
+  $.ajax({
+    method: "DELETE",
+    url: url,
+    dataType: "json",
+    data: { "Delete Id": ids }
+  })
 });
 
 // =========================================================================

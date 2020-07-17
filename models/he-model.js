@@ -17,7 +17,7 @@ let deliveryDataSchemaHE = new mongoose.Schema({
   ["Ready To Pick"]: String,
   ["Pick Released"]: String,
   ["Instock Flag"]: String,
-  ["Ordered Qty"]: String,
+  ["Order Qty"]: String,
   ["Unit Selling Price"]: String,
   ["Sales Amount"]: String,
   ["Tax Amount"]: String,

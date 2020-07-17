@@ -159,19 +159,17 @@ $(".delete-dd").click(() => {
 
   console.log(ids);
 
-  // console.log($(".checkbox-td").siblings(".slotDate-td").attr("data-id"));
-
-  // console.log($(".checkbox-td").attr("data-id"))
-
-  // console.log(ids);
-
   $.ajax({
     method: "DELETE",
     url: url,
     dataType: "json",
-    data: { "Delete Id": ids }
-  })
+    data: { "Delete Id": ids },
+    success: function (response) {
+      window.location.href = response.redirect_url;
+    }
+  });
 });
+
 
 // =========================================================================
 // Datatables Initialization & Custom Sort

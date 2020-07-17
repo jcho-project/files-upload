@@ -3,10 +3,10 @@
 // =========================================================================
 
 $(".all-docs").click(() => {
-  let url = "/he-dd/alldocs?_method_PUT"
+  let url = "/he-dd/test"
 
   $.ajax({
-    method: "PUT",
+    method: "GET",
     url: url,
     dataType: "json",
     data: { "Test": "Test" },

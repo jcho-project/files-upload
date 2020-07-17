@@ -162,9 +162,6 @@ router.post("/upload", (req, res) => {
     });
   }
 
-  console.log(newDD["Customer PO No"])
-  console.log(newDD["Ordered Qty"])
-
   // Insert into database
   deliveryDataHE.create(newDD, (err, newlyCreated) => {
     if (err) {
@@ -274,17 +271,6 @@ router.put("/:id/status", (req, res) => {
 // DESTROY route - delete selected line from DD list
 // =========================================================================
 
-// Destroy routes for HE
-router.delete("/:id", (req, res) => {
-  deliveryData.deleteMany({ marked: true }, (err) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.redirect("/he-dd");
-    }
-  });
-});
-
 router.delete("/", (req, res) => {
   deliveryDataHE.deleteMany({ _id: { $in: req.body["Delete Id"] } }, (err) => {
     if (err) {
@@ -302,7 +288,7 @@ router.delete("/", (req, res) => {
 // Document Creation Button All Docs
 // =========================================================================
 
-router.put("/alldocs", (req, res) => {
+router.get("/test", (req, res) => {
   console.log("all-docs clicked");
 
   // let data = xlsx.utils.sheet_to_json(workbook.Sheets["test"])

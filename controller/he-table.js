@@ -170,6 +170,29 @@ $(".delete-dd").click(() => {
   });
 });
 
+// =========================================================================
+// Document Creation Button All Docs
+// =========================================================================
+
+$(".all-docs").click(() => {
+  let url = "/he-dd/all-docs";
+  let ids = [];
+
+  $(".checkbox:checked").each(function (index, value) {
+    ids.push($(this).parent().siblings(".slotDate-td").attr("data-id"));
+  });
+
+  $.ajax({
+    method: "POST",
+    url: url,
+    dataType: "json",
+    data: { "Doc Id": ids },
+    success: function (response) {
+      window.location.href = response.redirect_url;
+    }
+  });
+});
+
 
 // =========================================================================
 // Datatables Initialization & Custom Sort

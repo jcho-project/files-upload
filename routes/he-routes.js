@@ -288,8 +288,17 @@ router.delete("/", (req, res) => {
 // Document Creation Button All Docs
 // =========================================================================
 
-router.get("/test", (req, res) => {
-  console.log("all-docs clicked");
+router.post("/all-docs", (req, res) => {
+  deliveryDataHE.find({ _id: { $in: req.body["Doc Id"] } }, (err, found) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(found)
+      res.send({
+        "redirect_url": "/he-dd"
+      });
+    }
+  })
 
   // let data = xlsx.utils.sheet_to_json(workbook.Sheets["test"])
 

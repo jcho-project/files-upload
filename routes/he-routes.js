@@ -2,7 +2,7 @@ const express = require("express"),
   router = express.Router(),
   deliveryDataHE = require("../models/he-model"),
   xlsx = require("xlsx"),
-  workbook = xlsx.readFile("./uploads/he-creator.xlsx");
+  workbook = xlsx.readFile("./uploads/he-creator.xlsm");
 
 // =========================================================================
 // Display HE DD List & Detail Info Page
@@ -293,34 +293,52 @@ router.post("/all-docs", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log(found)
+      let document_model = [
+        { Model: "G2" },
+        { Units: "H2" },
+        { Prod_Gr: "J2" }
+      ]
+
+      let sheet_name = workbook.SheetNames[0];
+
+      let cell = sheet_name[document_model[0].Model]
+
+      let cell_value = (cell ? cell.v : found[0].Model)
+
+      sheet_name[cell] = { t: "s", v: cell_value };
+
+      office.excel({ input: "./uploads/he-creator.xlsm", output: "test.pdf" }, function (error, pdf) {
+        if (error) {
+          console.log("Woops", error);
+        } else {
+          console.log("Saved to", pdf);
+        }
+      });
+
+      console.log(cell_value);
+
+      // for (let i = 0; i < document_model.length; i++) {
+
+
+      //   found[0].Model
+      // }
+
+      // let delivery_note_sheet = workbook.Sheets[workbook.SheetNames[0]];
+      // let delivery_note_model = "D2";
+
+      // let desired_cell = worksheet[delivery_note_model];
+
+      // // let desired_value = (desired_cell ? desired_cell.v : undefined);
+      // let desired_value = (desired_cell ? desired_cell.v : found[0].Model);
+
+      // // console.log(desired_value);
+
       res.send({
         "redirect_url": "/he-dd"
       });
     }
   })
 
-  // let data = xlsx.utils.sheet_to_json(workbook.Sheets["test"])
-
-  // let first_sheet_name = workbook.SheetNames[0];
-  // let address_of_cell = "A1";
-
-  // let worksheet = workbook.Sheets[first_sheet_name];
-  // let desired_cell = worksheet[address_of_cell];
-
-  // let desired_value = (desired_cell ? desired_cell.v : undefined);
-
-  // function wb_has_macro(wb) {
-  //   if (!!wb.vbaraw) {
-  //     console.log("macro available")
-  //   };
-  //   // const sheets = wb.SheetNames.map((n) => wb.Sheets[n]);
-  //   // return sheets.some((ws) => !!ws && ws['!type'] == 'macro');
-  // }
-
-  // console.log(first_sheet_name);
-  // console.log(desired_value);
-  // console.log(data);
 })
 
 module.exports = router;

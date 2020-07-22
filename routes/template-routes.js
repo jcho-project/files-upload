@@ -22,7 +22,7 @@ router.post("/he-creator", async (req, res) => {
     let avatar = req.files.sampleFile;
 
     // use the mv() method to place the file in upload directory (i.e. "uploads")
-    avatar.mv("./uploads/he-creator.xlsx");
+    avatar.mv("./uploads/he-creator.xlsm");
 
     // redirect to templates page
     res.redirect("/templates");
@@ -38,7 +38,7 @@ router.post("/ha-creator", async (req, res) => {
     let avatar = req.files.sampleFile;
 
     // use the mv() method to place the file in upload directory (i.e. "uploads")
-    avatar.mv("./uploads/ha-creator.xlsx");
+    avatar.mv("./uploads/ha-creator.xlsm");
 
     // redirect to templates page
     res.redirect("/templates");

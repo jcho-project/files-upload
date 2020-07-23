@@ -1,8 +1,12 @@
+const PdfPrinter = require("pdfmake");
+
 const express = require("express"),
   router = express.Router(),
   deliveryDataHE = require("../models/he-model"),
   xlsx = require("xlsx"),
-  workbook = xlsx.readFile("./uploads/he-creator.xlsm");
+  workbook = xlsx.readFile("./uploads/he-creator.xlsm"),
+  pdfMake = require("pdfmake/build/pdfmake.js"),
+  pdfFonts = require("pdfmake/build/vfs_fonts.js")
 
 // =========================================================================
 // Display HE DD List & Detail Info Page
@@ -293,29 +297,55 @@ router.post("/all-docs", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      let document_model = [
-        { Model: "G2" },
-        { Units: "H2" },
-        { Prod_Gr: "J2" }
-      ]
+      console.log(found[0]);
 
-      let sheet_name = workbook.SheetNames[0];
-
-      let cell = sheet_name[document_model[0].Model]
-
-      let cell_value = (cell ? cell.v : found[0].Model)
-
-      sheet_name[cell] = { t: "s", v: cell_value };
-
-      office.excel({ input: "./uploads/he-creator.xlsm", output: "test.pdf" }, function (error, pdf) {
-        if (error) {
-          console.log("Woops", error);
-        } else {
-          console.log("Saved to", pdf);
+      const fonts = {
+        Roboto: {
+          normal: "public/fonts/Roboto-Regular.ttf",
+          bold: "fonts/Roboto-Medium.ttf",
+          italics: "fonts/Roboto-Italic.ttf",
+          bolditalics: "fonts/Roboto-MediumItalic.ttf"
         }
-      });
+      };
 
-      console.log(cell_value);
+      let PdfPrinter = require("pdfMake/src/printer")
+      let printer = new PdfPrinter(fonts);
+      let fs = require("fs");
+
+      let docDefinition = {
+        content: [
+          'First paragraph',
+          'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines',
+          found[0].Model,
+          found[0]["Order No"],
+          found[0]["Line No"]
+        ]
+      }
+
+      var pdfDoc = printer.createPdfKitDocument(docDefinition);
+      pdfDoc.pipe(fs.createWriteStream('pdfs/basics.pdf'));
+      pdfDoc.end();
+
+      // let pdfDoc = printer.createPdfKitDocument(docDefinition, options);
+      // pdfDoc.pipe(fs.createWriteStream("document.pdf"));
+      // pdfDoc.end();
+
+
+      // let document_model = [
+      //   { Model: "G2" },
+      //   { Units: "H2" },
+      //   { Prod_Gr: "J2" }
+      // ]
+
+      // let sheet_name = workbook.SheetNames[0];
+
+      // let cell = sheet_name[document_model[0].Model]
+
+      // let cell_value = (cell ? cell.v : found[0].Model)
+
+      // sheet_name[cell] = { t: "s", v: cell_value };
+
+      // console.log(cell_value);
 
       // for (let i = 0; i < document_model.length; i++) {
 

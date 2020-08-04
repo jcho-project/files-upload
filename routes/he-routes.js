@@ -314,11 +314,27 @@ router.post("/all-docs", (req, res) => {
 
       let docDefinition = {
         content: [
-          'First paragraph',
-          'Another paragraph, this time a little bit longer to make sure, this line will be divided into at least two lines',
-          found[0].Model,
-          found[0]["Order No"],
-          found[0]["Line No"]
+          // found[0].Model,
+          // found[0]["Order No"],
+          // found[0]["Line No"],
+          {
+            image: "public/img/main-logo.png",
+            fit: [150, 150]
+          },
+          {
+            text: "Proforma Invoice",
+            style: "header",
+            alignment: "center"
+          },
+          {
+            style: "tableExample",
+            table: {
+              widths: ["auto", "*"],
+              body: [
+                ["Shipper/Exporter\n LG Electronics Deutschland GmbH", "Remarks"]
+              ]
+            }
+          }
         ]
       }
 

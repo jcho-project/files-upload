@@ -26,7 +26,7 @@
     "mongoose": "^5.8.10",
     "nodemon": "^2.0.4",
     "pdfmake": "^0.1.66",
-    "xlsx": "^0.16.0"
+    "xlsx": "^0.17.0"
   },
   "devDependencies": {}
 }
